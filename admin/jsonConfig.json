@@ -1,0 +1,16 @@
+{
+	"i18n": true,
+	"type": "panel",
+	"items": {
+		"IP-Address": {
+			"type": "text",
+			"label": "IP-Address of sonnenCharger",
+			"newLine": true
+		},
+		"Interval": {
+			"type": "number",
+			"label": "Interval for fetching data (seconds)",
+			"newLine": true
+		}
+	}
+}

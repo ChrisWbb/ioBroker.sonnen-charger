@@ -1,0 +1,107 @@
+{
+	"common": {
+		"name": "sonnen-charger",
+		"version": "0.0.1",
+		"news": {
+			"0.0.1": {
+				"en": "initial release",
+				"de": "Erstveröffentlichung",
+				"ru": "Начальная версия",
+				"pt": "lançamento inicial",
+				"nl": "Eerste uitgave",
+				"fr": "Première version",
+				"it": "Versione iniziale",
+				"es": "Versión inicial",
+				"pl": "Pierwsze wydanie",
+				"zh-cn": "首次出版"
+			}
+		},
+		"title": "sonnenCharger",
+		"titleLang": {
+			"en": "sonnenCharger",
+			"de": "sonnenCharger",
+			"ru": "sonnenCharger",
+			"pt": "sonnenCharger",
+			"nl": "sonnenCharger",
+			"fr": "sonnenCharger",
+			"it": "sonnenCharger",
+			"es": "sonnenCharger",
+			"pl": "sonnenCharger",
+			"zh-cn": "sonnenCharger"
+		},
+		"desc": {
+			"en": "Integration of sonnenCharger into ioBroker",
+			"de": "Integration of sonnenCharger into ioBroker",
+			"ru": "Integration of sonnenCharger into ioBroker",
+			"pt": "Integration of sonnenCharger into ioBroker",
+			"nl": "Integration of sonnenCharger into ioBroker",
+			"fr": "Integration of sonnenCharger into ioBroker",
+			"it": "Integration of sonnenCharger into ioBroker",
+			"es": "Integration of sonnenCharger into ioBroker",
+			"pl": "Integration of sonnenCharger into ioBroker",
+			"zh-cn": "Integration of sonnenCharger into ioBroker"
+		},
+		"authors": [
+			"ChrisWbb <development@chrweber.de>"
+		],
+		"keywords": [
+			"sonnen",
+			"charger",
+			"wallbox"
+		],
+		"license": "MIT",
+		"platform": "Javascript/Node.js",
+		"main": "build/main.js",
+		"icon": "sonnen-charger.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/ChrisWbb/ioBroker.sonnen-charger/main/admin/sonnen-charger.png",
+		"readme": "https://github.com/ChrisWbb/ioBroker.sonnen-charger/blob/main/README.md",
+		"loglevel": "info",
+		"mode": "daemon",
+		"type": "energy",
+		"compact": true,
+		"connectionType": "local",
+		"dataSource": "poll",
+		"adminUI": {
+			"config": "json"
+		},
+		"dependencies": [
+			{
+				"js-controller": ">=3.3.22"
+			}
+		],
+		"globalDependencies": [
+			{
+				"admin": ">=5.1.13"
+			}
+		]
+	},
+	"native": {
+		"IP-Address": "",
+		"Interval": "60"
+	},
+	"objects": [],
+	"instanceObjects": [
+		{
+			"_id": "info",
+			"type": "channel",
+			"common": {
+				"name": "Information"
+			},
+			"native": {}
+		},
+		{
+			"_id": "info.connection",
+			"type": "state",
+			"common": {
+				"role": "indicator.connected",
+				"name": "Device or service connected",
+				"type": "boolean",
+				"read": true,
+				"write": false,
+				"def": false
+			},
+			"native": {}
+		}
+	]
+}
