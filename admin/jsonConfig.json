@@ -2,14 +2,34 @@
 	"i18n": true,
 	"type": "panel",
 	"items": {
-		"IP-Address": {
+		"serverIp": {
 			"type": "text",
-			"label": "IP-Address of sonnenCharger",
+			"sm": 12,
+			"md": 6,
+			"lg": 6,
+			"label": "serverIp",
+			"help": "serverIp_help"
+		},
+		"serverPort": {
+			"type": "number",
+			"min": 1,
+			"max": 65000,
+			"sm": 12,
+			"md": 6,
+			"lg": 6,
+			"label": "serverPort",
+			"help": "serverPort_help",
 			"newLine": true
 		},
-		"Interval": {
+		"interval": {
 			"type": "number",
-			"label": "Interval for fetching data (seconds)",
+			"min": 30,
+			"max": 3600,
+			"sm": 12,
+			"md": 6,
+			"lg": 6,
+			"label": "interval",
+			"help": "interval_help",
 			"newLine": true
 		}
 	}

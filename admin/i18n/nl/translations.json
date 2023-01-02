@@ -1,5 +1,12 @@
 {
-	"sonnen-charger adapter settings": "Adapterinstellingen voor sonnen-charger",
-	"IP-Address": "IP-Address of sonnenCharger",
-	"Interval": "Interval for fetching data (seconds)"
+    "sonnen-charger adapter settings": "Adapterinstellingen voor sonnen-charger",
+    "IP-Address": "IP-Address of sonnenCharger",
+    "Interval": "Interval for fetching data (seconds)",
+    "serverIp": "IP adres",
+    "serverIp_help": "IP-adres van sonnenCharger",
+    "serverPort": "Haven",
+    "serverPort_help": "Poort van Modbus-interface",
+    "Interval_help": "Interval voor het ophalen van gegevens (seconden)",
+    "interval": "Interval aanvragen",
+    "interval_help": "Interval voor het ophalen van gegevens (seconden)"
 }

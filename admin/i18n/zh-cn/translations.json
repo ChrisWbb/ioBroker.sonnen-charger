@@ -1,5 +1,12 @@
 {
-	"sonnen-charger adapter settings": "sonnen-charger的适配器设置",
-	"IP-Address": "IP-Address of sonnenCharger",
-	"Interval": "Interval for fetching data (seconds)"
+    "sonnen-charger adapter settings": "sonnen-charger的适配器设置",
+    "IP-Address": "IP-Address of sonnenCharger",
+    "Interval": "Interval for fetching data (seconds)",
+    "serverIp": "IP地址",
+    "serverIp_help": "sonnenCharger 的 IP 地址",
+    "serverPort": "港口",
+    "serverPort_help": "Modbus接口端口",
+    "Interval_help": "获取数据的时间间隔（秒）",
+    "interval": "请求间隔",
+    "interval_help": "获取数据的时间间隔（秒）"
 }

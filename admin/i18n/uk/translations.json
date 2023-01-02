@@ -1,0 +1,11 @@
+{
+    "sonnen-charger adapter settings": "Налаштування адаптера для sonnen-charger",
+    "serverIp": "IP-адреса",
+    "serverIp_help": "IP-адреса sonnenCharger",
+    "serverPort": "Порт",
+    "serverPort_help": "Порт інтерфейсу Modbus",
+    "Interval": "Інтервал запиту",
+    "Interval_help": "Інтервал отримання даних (секунди)",
+    "interval": "Інтервал запиту",
+    "interval_help": "Інтервал отримання даних (секунди)"
+}
