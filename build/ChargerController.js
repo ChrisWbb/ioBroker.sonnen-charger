@@ -35,14 +35,14 @@ class ChargerController {
   async testConnect() {
     try {
       console.info(" ");
-      let infoData = await this.fetchChargerInfoData();
+      const infoData = await this.fetchChargerInfoData();
       console.info("SerialNumber: " + infoData.getSerialNumber());
       console.info("Model: " + infoData.getModel());
       console.info("HardwareVersion: " + infoData.getHardwareVersion());
       console.info("SoftwareVersion: " + infoData.getSoftwareVersion());
       console.info("NumberOfConnectors: " + infoData.getNumberOfConnectors());
       console.info(" ");
-      let connectorInfoData = await this.fetchConnectorInfoData(1);
+      const connectorInfoData = await this.fetchConnectorInfoData(1);
       console.info("ConnectorType: " + connectorInfoData.getConnectorTypeAsString());
       console.info("NumberOfPhases: " + connectorInfoData.getNumberOfPhases());
       console.info("L1ConnectedToPhase: " + connectorInfoData.getL1ConnectedToPhase());
@@ -50,7 +50,7 @@ class ChargerController {
       console.info("L3ConnectedToPhase: " + connectorInfoData.getL3ConnectedToPhase());
       console.info("CustomMaxCurrent: " + connectorInfoData.getCustomMaxCurrent() + " A");
       console.info(" ");
-      let connectorMeasementData = await this.fetchConnectorMeasurementData(1);
+      const connectorMeasementData = await this.fetchConnectorMeasurementData(1);
       console.info("ConnectorStatus: " + connectorMeasementData.getConnectorStatusAsString());
       console.info("MeasuredVehicleNumberOfPhases: " + connectorMeasementData.getMeasuredVehicleNumberOfPhasesAsString());
       console.info("EvMaxPhaseCurrent: " + connectorMeasementData.getEvMaxPhaseCurrent() + " A");
@@ -78,29 +78,27 @@ class ChargerController {
     }
   }
   connect(ipAddress, port) {
-    let options = {
+    const options = {
       "host": ipAddress,
       "port": port
     };
     this.socket.on("connect", this.testConnect.bind(this));
     this.socket.connect(options);
   }
-  on(event, listener) {
-  }
   async fetchInputRegister(start, count) {
-    let result = new Array();
-    let modbusResponse = await this.client.readInputRegisters(start, count).then(function(resp) {
+    const result = new Array();
+    await this.client.readInputRegisters(start, count).then(function(resp) {
       for (let i = 0; i < resp.response.body.values.length; i++) {
         result[i] = resp.response.body.values[i];
       }
-    }).catch(function() {
-      console.error(arguments);
+    }).catch(function(...args) {
+      console.error(args);
     });
     return result;
   }
   async fetchChargerInfoData() {
-    let registerData = await this.fetchInputRegister(990, 31);
-    let data = new import_ChargerInfoData.ChargerInfoData();
+    const registerData = await this.fetchInputRegister(990, 31);
+    const data = new import_ChargerInfoData.ChargerInfoData();
     data.setSerialNumber(import_RegisterConverterUtil.RegisterConverterUtil.getRegisterDataAsString(registerData, 0, 10));
     data.setModel(import_RegisterConverterUtil.RegisterConverterUtil.getRegisterDataAsString(registerData, 10, 10));
     data.setHardwareVersion(import_RegisterConverterUtil.RegisterConverterUtil.getRegisterDataAsString(registerData, 20, 5));
@@ -109,8 +107,8 @@ class ChargerController {
     return data;
   }
   async fetchConnectorInfoData(num) {
-    let registerData = await this.fetchInputRegister(1022 + (num - 1) * 100, 8);
-    let data = new import_ChargerConnectorInfoData.ChargerConnectorInfoData();
+    const registerData = await this.fetchInputRegister(1022 + (num - 1) * 100, 8);
+    const data = new import_ChargerConnectorInfoData.ChargerConnectorInfoData();
     data.setConnectorType(import_RegisterConverterUtil.RegisterConverterUtil.getRegisterDataAsInt16(registerData, 0));
     data.setNumberOfPhases(import_RegisterConverterUtil.RegisterConverterUtil.getRegisterDataAsInt16(registerData, 1));
     data.setL1ConnectedToPhase(import_RegisterConverterUtil.RegisterConverterUtil.getRegisterDataAsInt16(registerData, 2));
@@ -120,8 +118,8 @@ class ChargerController {
     return data;
   }
   async fetchConnectorMeasurementData(num) {
-    let registerData = await this.fetchInputRegister(0 + (num - 1) * 100, 48);
-    let data = new import_ChargerConnectorMeasurementData.ChargerConnectorMeasurementData();
+    const registerData = await this.fetchInputRegister(0 + (num - 1) * 100, 48);
+    const data = new import_ChargerConnectorMeasurementData.ChargerConnectorMeasurementData();
     data.setConnectorStatus(import_RegisterConverterUtil.RegisterConverterUtil.getRegisterDataAsInt16(registerData, 0));
     data.setMeasuredVehicleNumberOfPhases(import_RegisterConverterUtil.RegisterConverterUtil.getRegisterDataAsInt16(registerData, 1));
     data.setEvMaxPhaseCurrent(import_RegisterConverterUtil.RegisterConverterUtil.getRegisterDataAsFloat32(registerData, 2));

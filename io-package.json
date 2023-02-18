@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sonnen-charger",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "news": {
+      "1.0.2": {
+        "en": "fix ESLint findings",
+        "de": "eSLint-Ergebnisse beheben",
+        "ru": "исправить ESLint выводы",
+        "pt": "corrigir os achados ESLint",
+        "nl": "vertaling:",
+        "fr": "fixer les résultats ESLint",
+        "it": "risolvere i risultati di ESLint",
+        "es": "fijar los resultados de ESLint",
+        "pl": "naprawić wyniki",
+        "uk": "виправити ESLint результати",
+        "zh-cn": "fixESLint的调查结果"
+      },
       "1.0.1": {
         "en": "preparation for release\nsmall fixes from adapter check",
         "de": "vorbereitung auf die freigabe\nkleine befestigungen von adapter-check",

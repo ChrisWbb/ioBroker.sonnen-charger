@@ -70,7 +70,7 @@ class SonnenCharger extends utils.Adapter {
   }
   async updateChargerInfoData() {
     this.log.info("updateChargerInfoData");
-    let infoData = await this.chargerController.fetchChargerInfoData();
+    const infoData = await this.chargerController.fetchChargerInfoData();
     this.setState("chargerSettings.serialNumber", infoData.getSerialNumber(), true);
     this.setState("chargerSettings.model", infoData.getModel(), true);
     this.setState("chargerSettings.hwVersion", infoData.getHardwareVersion(), true);
@@ -156,7 +156,7 @@ class SonnenCharger extends utils.Adapter {
   }
   async updateChargerConnectorInfoData(num) {
     this.log.info("updateChargerConnectorInfoData for connector " + num);
-    let infoData = await this.chargerController.fetchConnectorInfoData(num);
+    const infoData = await this.chargerController.fetchConnectorInfoData(num);
     this.setState("chargerSettings.connectors." + num + ".connectorType", infoData.getConnectorTypeAsString(), true);
     this.setState("chargerSettings.connectors." + num + ".numberOfPhases", infoData.getNumberOfPhases(), true);
     this.setState("chargerSettings.connectors." + num + ".l1ConnectedToPhase", infoData.getL1ConnectedToPhase(), true);
@@ -458,7 +458,7 @@ class SonnenCharger extends utils.Adapter {
   }
   async updateChargerConnectorMeasurementObjects(num) {
     this.log.info("updateChargerConnectorMeasurementObjects for connector " + num);
-    let infoData = await this.chargerController.fetchConnectorMeasurementData(num);
+    const infoData = await this.chargerController.fetchConnectorMeasurementData(num);
     this.setState("measurements." + num + ".connectorStatus", infoData.getConnectorStatus(), true);
     this.setState("measurements." + num + ".connectorStatusLabel", infoData.getConnectorStatusAsString(), true);
     this.setState("measurements." + num + ".measuredVehicleNumberOfPhases", infoData.getMeasuredVehicleNumberOfPhases(), true);

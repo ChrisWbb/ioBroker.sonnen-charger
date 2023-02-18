@@ -23,17 +23,17 @@ __export(RegisterConverterUtil_exports, {
 module.exports = __toCommonJS(RegisterConverterUtil_exports);
 class RegisterConverterUtil {
   static intArrayToByteArray(intArray) {
-    let result = new Array();
+    const result = new Array();
     for (let i = 0; i < intArray.length; i++) {
-      let lowByte = intArray[i] & 255;
-      let highByte = intArray[i] >> 8 & 255;
+      const lowByte = intArray[i] & 255;
+      const highByte = intArray[i] >> 8 & 255;
       result[(intArray.length - i) * 2 - 1] = highByte;
       result[(intArray.length - i) * 2 - 2] = lowByte;
     }
     return result;
   }
   static intArrayToFloat32(intArray) {
-    let byteArray = new Array(4);
+    const byteArray = new Array(4);
     byteArray[3] = intArray[1] & 255;
     byteArray[2] = intArray[1] >> 8 & 255;
     byteArray[1] = intArray[0] & 255;
@@ -42,7 +42,7 @@ class RegisterConverterUtil {
   }
   static byteArrayToNumber(byteArray) {
     let value = 0;
-    for (var i = byteArray.length - 1; i >= 0; i--) {
+    for (let i = byteArray.length - 1; i >= 0; i--) {
       value = value * 256 + byteArray[i];
     }
     return value;
@@ -57,30 +57,30 @@ class RegisterConverterUtil {
     return result;
   }
   static getRegisterData(array, start, length) {
-    let result = new Array(length);
+    const result = new Array(length);
     for (let i = 0; i < length; i++) {
       result[i] = array[start + i];
     }
     return result;
   }
   static getRegisterDataAsString(array, start, length) {
-    let intArray = this.getRegisterData(array, start, length);
+    const intArray = this.getRegisterData(array, start, length);
     return this.byteArrayToString(this.intArrayToByteArray(intArray));
   }
   static getRegisterDataAsInt64(array, start) {
-    let intArray = this.getRegisterData(array, start, 4);
+    const intArray = this.getRegisterData(array, start, 4);
     return this.byteArrayToNumber(this.intArrayToByteArray(intArray));
   }
   static getRegisterDataAsInt32(array, start) {
-    let intArray = this.getRegisterData(array, start, 2);
+    const intArray = this.getRegisterData(array, start, 2);
     return this.byteArrayToNumber(this.intArrayToByteArray(intArray));
   }
   static getRegisterDataAsInt16(array, start) {
-    let intArray = this.getRegisterData(array, start, 1);
+    const intArray = this.getRegisterData(array, start, 1);
     return intArray[0];
   }
   static getRegisterDataAsFloat32(array, start) {
-    let intArray = this.getRegisterData(array, start, 2);
+    const intArray = this.getRegisterData(array, start, 2);
     return this.intArrayToFloat32(intArray);
   }
 }
