@@ -20,7 +20,7 @@ Integration of sonnenCharger into ioBroker
 	### **WORK IN PROGRESS**
 -->
 
-## 1.0.0 (2023-02-18)
+### 1.0.0 (2023-02-18)
 * (ChrisWbb) initial release
 
 ## License
