@@ -8,6 +8,7 @@ import { ChargerController } from "./ChargerController";
 class SonnenCharger extends utils.Adapter {
 
 	private chargerController : ChargerController;
+	private timer: NodeJS.Timeout | undefined;
 
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
 		super({
@@ -55,7 +56,7 @@ class SonnenCharger extends utils.Adapter {
 		this.createChargerConnectorInfoObjects(1);
 		this.createChargerConnectorMeasurementObjects(1);
 
-		setInterval(async () => {
+		this.timer = setInterval(async () => {
 			await this.updateChargerData();
 		  }, this.config.interval * 1000);
 	}
@@ -73,7 +74,8 @@ class SonnenCharger extends utils.Adapter {
 			// clearTimeout(timeout1);
 			// clearTimeout(timeout2);
 			// ...
-			// clearInterval(interval1);
+
+			clearInterval(this.timer);
 
 			callback();
 		} catch (e) {

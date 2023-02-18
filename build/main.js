@@ -50,13 +50,14 @@ class SonnenCharger extends utils.Adapter {
     this.chargerController.connect(this.config.serverIp, this.config.serverPort);
     this.createChargerConnectorInfoObjects(1);
     this.createChargerConnectorMeasurementObjects(1);
-    setInterval(async () => {
+    this.timer = setInterval(async () => {
       await this.updateChargerData();
     }, this.config.interval * 1e3);
   }
   onUnload(callback) {
     try {
       this.setState("info.connection", false, true);
+      clearInterval(this.timer);
       callback();
     } catch (e) {
       callback();
