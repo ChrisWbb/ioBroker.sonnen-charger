@@ -19,7 +19,7 @@ Integration of sonnenCharger into ioBroker
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-**WORK IN PROGRESS**
+### **WORK IN PROGRESS**
 * (ChrisWbb) fix ESLint findings
 
 
