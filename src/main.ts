@@ -17,7 +17,7 @@ class SonnenCharger extends utils.Adapter {
 		});
 
 		this.chargerController = new ChargerController();
-		
+
 		this.on("ready", this.onReady.bind(this));
 		this.on("unload", this.onUnload.bind(this));
 	}
@@ -26,32 +26,32 @@ class SonnenCharger extends utils.Adapter {
 	 * Is called when databases are connected and adapter received configuration.
 	 */
 	private async onReady(): Promise<void> {
-		
+
 		// Reset the connection indicator during startup
 		this.setState("info.connection", true, true);
 
 		// check configuration
 		if (!this.config.serverIp) {
-			this.log.error('Server IP is empty - please check instance configuration')
+			this.log.error("Server IP is empty - please check instance configuration")
 			return;
 		}
 		if (!this.config.serverPort) {
-			this.log.error('Server port is empty - please check instance configuration')
+			this.log.error("Server port is empty - please check instance configuration")
 			return;
 		}
 		if (!this.config.interval) {
-			this.log.error('interval is empty - please check instance configuration')
+			this.log.error("interval is empty - please check instance configuration")
 			return;
 		}
-		
+
 		this.log.info("config serverIp: " + this.config.serverIp);
 		this.log.info("config serverPort: " + this.config.serverPort);
 		this.log.info("config interval: " + this.config.interval);
-		
-		this.log.info('conncet to modbus');
+
+		this.log.info("conncet to modbus");
 
 		this.chargerController.connect( this.config.serverIp, this.config.serverPort);
-	
+
 		// TODO loop over numberOf Connctors
 		this.createChargerConnectorInfoObjects(1);
 		this.createChargerConnectorMeasurementObjects(1);
@@ -93,12 +93,12 @@ class SonnenCharger extends utils.Adapter {
 		this.updateChargerConnectorMeasurementObjects(1);
 	}
 
-	
+
 	private async updateChargerInfoData(): Promise<void> {
 
 		this.log.info("updateChargerInfoData");
-		
-		let infoData = await this.chargerController.fetchChargerInfoData();
+
+		const infoData = await this.chargerController.fetchChargerInfoData();
 		this.setState("chargerSettings.serialNumber", infoData.getSerialNumber(), true);
 		this.setState("chargerSettings.model", infoData.getModel(), true);
 		this.setState("chargerSettings.hwVersion", infoData.getHardwareVersion(), true);
@@ -109,25 +109,25 @@ class SonnenCharger extends utils.Adapter {
 	private async createChargerConnectorInfoObjects(num : number): Promise<void> {
 
 		this.log.info("createChargerConnectorInfoObjects for connector "+num);
-		
-		await this.setObjectNotExistsAsync("chargerSettings.connectors."+num, { 
-			type: "channel", 
-			common: { 
-				name: "todo" 
-			}, 
-			native: {} 
+
+		await this.setObjectNotExistsAsync("chargerSettings.connectors."+num, {
+			type: "channel",
+			common: {
+				name: "todo"
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("chargerSettings.connectors."+num+".connectorType", { 
-			type: "state", 
-			common: { 
-				name: "Connector type", 
-				type: "string", 
-				role: "indicator", 
-				read: true, 
+		await this.setObjectNotExistsAsync("chargerSettings.connectors."+num+".connectorType", {
+			type: "state",
+			common: {
+				name: "Connector type",
+				type: "string",
+				role: "indicator",
+				read: true,
 				write: false
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
 		await this.setObjectNotExistsAsync("chargerSettings.connectors."+num+".numberOfPhases", {
@@ -190,346 +190,346 @@ class SonnenCharger extends utils.Adapter {
 			},
 			native: {}
 		});
-	}	
+	}
 
 	private async updateChargerConnectorInfoData(num : number): Promise<void> {
 
 		this.log.info("updateChargerConnectorInfoData for connector "+num);
-		
-		let infoData = await this.chargerController.fetchConnectorInfoData(num);
+
+		const infoData = await this.chargerController.fetchConnectorInfoData(num);
 		this.setState("chargerSettings.connectors."+num+".connectorType", infoData.getConnectorTypeAsString(), true);
 		this.setState("chargerSettings.connectors."+num+".numberOfPhases", infoData.getNumberOfPhases(), true);
 		this.setState("chargerSettings.connectors."+num+".l1ConnectedToPhase", infoData.getL1ConnectedToPhase(), true);
 		this.setState("chargerSettings.connectors."+num+".l2ConnectedToPhase", infoData.getL2ConnectedToPhase(), true);
 		this.setState("chargerSettings.connectors."+num+".l3ConnectedToPhase", infoData.getL3ConnectedToPhase(), true);
 		this.setState("chargerSettings.connectors."+num+".customMaxCurrent", infoData.getCustomMaxCurrent(), true);
-	}	
+	}
 
 	private async createChargerConnectorMeasurementObjects(num : number): Promise<void> {
 
 		this.log.info("createChargerConnectorMeasurementObjects for connector "+num);
-		
-		await this.setObjectNotExistsAsync("measurements."+num, { 
-			type: "channel", 
-			common: { 
-				name: "measurements" 
-			}, 
-			native: {} 
+
+		await this.setObjectNotExistsAsync("measurements."+num, {
+			type: "channel",
+			common: {
+				name: "measurements"
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".connectorStatus", { 
-			type: "state", 
-			common: { 
-				name: "Connnector status id", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".connectorStatus", {
+			type: "state",
+			common: {
+				name: "Connnector status id",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".connectorStatusLabel", { 
-			type: "state", 
-			common: { 
-				name: "Connnector status", 
-				type: "string", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".connectorStatusLabel", {
+			type: "state",
+			common: {
+				name: "Connnector status",
+				type: "string",
+				role: "value",
+				read: true,
 				write: false
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".measuredVehicleNumberOfPhases", { 
-			type: "state", 
-			common: { 
-				name: "Measured vehicle number of phases id", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".measuredVehicleNumberOfPhases", {
+			type: "state",
+			common: {
+				name: "Measured vehicle number of phases id",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".measuredVehicleNumberOfPhasesLabel",{ 
-			type: "state", 
-			common: { 
-				name: "Measured vehicle number of phases", 
-				type: "string", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".measuredVehicleNumberOfPhasesLabel",{
+			type: "state",
+			common: {
+				name: "Measured vehicle number of phases",
+				type: "string",
+				role: "value",
+				read: true,
 				write: false
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".evMaxPhaseCurrent", { 
-			type: "state", 
-			common: { 
-				name: "EV max phase current", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".evMaxPhaseCurrent", {
+			type: "state",
+			common: {
+				name: "EV max phase current",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false,
 				unit: "A"
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".targetCurrentFromPowerMgm", { 
-			type: "state", 
-			common: { 
-				name: "Target current from power mgm or modbus", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".targetCurrentFromPowerMgm", {
+			type: "state",
+			common: {
+				name: "Target current from power mgm or modbus",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false,
 				unit: "A"
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".frequency", { 
-			type: "state", 
-			common: { 
-				name: "Frequency", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".frequency", {
+			type: "state",
+			common: {
+				name: "Frequency",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false,
 				unit: "Hz"
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".voltageL1", { 
-			type: "state", 
-			common: { 
-				name: "L-N voltage (L1)", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".voltageL1", {
+			type: "state",
+			common: {
+				name: "L-N voltage (L1)",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false,
 				unit: "V"
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".voltageL2", { 
-			type: "state", 
-			common: { 
-				name: "L-N voltage (L2)", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".voltageL2", {
+			type: "state",
+			common: {
+				name: "L-N voltage (L2)",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false,
 				unit: "V"
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".voltageL3", { 
-			type: "state", 
-			common: { 
-				name: "L-N voltage (L3)", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".voltageL3", {
+			type: "state",
+			common: {
+				name: "L-N voltage (L3)",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false,
 				unit: "V"
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".currentL1", { 
-			type: "state", 
-			common: { 
-				name: "Curent (L1)", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".currentL1", {
+			type: "state",
+			common: {
+				name: "Curent (L1)",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false,
 				unit: "A"
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".currentL2", { 
-			type: "state", 
-			common: { 
-				name: "Curent (L2)", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".currentL2", {
+			type: "state",
+			common: {
+				name: "Curent (L2)",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false,
 				unit: "A"
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".currentL3", { 
-			type: "state", 
-			common: { 
-				name: "Curent (L3)", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".currentL3", {
+			type: "state",
+			common: {
+				name: "Curent (L3)",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false,
 				unit: "A"
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".activePowerL1", { 
-			type: "state", 
-			common: { 
-				name: "Active power (L1)", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".activePowerL1", {
+			type: "state",
+			common: {
+				name: "Active power (L1)",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false,
 				unit: "kW"
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".activePowerL2", { 
-			type: "state", 
-			common: { 
-				name: "Active power (L2)", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".activePowerL2", {
+			type: "state",
+			common: {
+				name: "Active power (L2)",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false,
 				unit: "kW"
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".activePowerL3", { 
-			type: "state", 
-			common: { 
-				name: "Active power (L3)", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".activePowerL3", {
+			type: "state",
+			common: {
+				name: "Active power (L3)",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false,
 				unit: "kW"
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".activePowerTotal", { 
-			type: "state", 
-			common: { 
-				name: "Active power (total)", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".activePowerTotal", {
+			type: "state",
+			common: {
+				name: "Active power (total)",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false,
 				unit: "kW"
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".powerFactor", { 
-			type: "state", 
-			common: { 
-				name: "Power factor", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".powerFactor", {
+			type: "state",
+			common: {
+				name: "Power factor",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".totalImportedActiveEnergyInRunningSession", { 
-			type: "state", 
-			common: { 
-				name: "Total imported active energy in running session", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".totalImportedActiveEnergyInRunningSession", {
+			type: "state",
+			common: {
+				name: "Total imported active energy in running session",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false,
 				unit: "kWh"
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".runningSessionDuration", { 
-			type: "state", 
-			common: { 
-				name: "Running session duration", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".runningSessionDuration", {
+			type: "state",
+			common: {
+				name: "Running session duration",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false,
 				unit: "s"
-			}, 
-			native: {} 
-		});
-		
-		await this.setObjectNotExistsAsync("measurements."+num+".runningSessionDepartureTime", { 
-			type: "state", 
-			common: { 
-				name: "Running session departure time", 
-				type: "number", 
-				role: "value", 
-				read: true, 
-				write: false,
-				unit: "s"
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".runningSessionID", { 
-			type: "state", 
-			common: { 
-				name: "Running session ID", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".runningSessionDepartureTime", {
+			type: "state",
+			common: {
+				name: "Running session departure time",
+				type: "number",
+				role: "value",
+				read: true,
+				write: false,
+				unit: "s"
+			},
+			native: {}
+		});
+
+		await this.setObjectNotExistsAsync("measurements."+num+".runningSessionID", {
+			type: "state",
+			common: {
+				name: "Running session ID",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".evMaxPower", { 
-			type: "state", 
-			common: { 
-				name: "EV max power", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".evMaxPower", {
+			type: "state",
+			common: {
+				name: "EV max power",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false,
 				unit: "kW"
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-		await this.setObjectNotExistsAsync("measurements."+num+".evPlannedEnergy", { 
-			type: "state", 
-			common: { 
-				name: "EV planned energy", 
-				type: "number", 
-				role: "value", 
-				read: true, 
+		await this.setObjectNotExistsAsync("measurements."+num+".evPlannedEnergy", {
+			type: "state",
+			common: {
+				name: "EV planned energy",
+				type: "number",
+				role: "value",
+				read: true,
 				write: false,
 				unit: "kWh"
-			}, 
-			native: {} 
+			},
+			native: {}
 		});
 
-	}	
+	}
 
 	private async updateChargerConnectorMeasurementObjects(num : number): Promise<void> {
 
 		this.log.info("updateChargerConnectorMeasurementObjects for connector "+num);
-		
-		let infoData = await this.chargerController.fetchConnectorMeasurementData(num);
+
+		const infoData = await this.chargerController.fetchConnectorMeasurementData(num);
 		this.setState("measurements."+num+".connectorStatus", infoData.getConnectorStatus(), true);
 		this.setState("measurements."+num+".connectorStatusLabel", infoData.getConnectorStatusAsString(), true);
 		this.setState("measurements."+num+".measuredVehicleNumberOfPhases", infoData.getMeasuredVehicleNumberOfPhases(), true);
@@ -554,7 +554,7 @@ class SonnenCharger extends utils.Adapter {
 		this.setState("measurements."+num+".runningSessionID", infoData.getRunningSessionID(), true);
 		this.setState("measurements."+num+".evMaxPower", infoData.getEvMaxPower(), true);
 		this.setState("measurements."+num+".evPlannedEnergy", infoData.getEvPlannedEnergy(), true);
-	}	
+	}
 }
 
 if (require.main !== module) {

@@ -1,58 +1,54 @@
 class ChargerInfoData {
 
-    private serialNumber : string = "";
-    private model : string = "";
-    private hardwareVersion : string = "";
-    private softwareVersion : string = "";
-    private numberOfConnectors : number = -1;
- 
-    constructor() {
+	private serialNumber  = "";
+	private model  = "";
+	private hardwareVersion  = "";
+	private softwareVersion  = "";
+	private numberOfConnectors  = -1;
 
-    }
+	/* setter */
 
-    /* setter */
+	public setSerialNumber(serialNumber : string) : void {
+		this.serialNumber = serialNumber;
+	}
 
-    public setSerialNumber(serialNumber : string) {
-        this.serialNumber = serialNumber;
-    }
+	public setModel(model : string) : void {
+		this.model = model;
+	}
 
-    public setModel(model : string) {
-        this.model = model;
-    }
+	public setHardwareVersion(hardwareVersion : string) : void {
+		this.hardwareVersion = hardwareVersion;
+	}
 
-    public setHardwareVersion(hardwareVersion : string) {
-        this.hardwareVersion = hardwareVersion;
-    }
+	public setSoftwareVersion(softwareVersion : string) : void {
+		this.softwareVersion = softwareVersion;
+	}
 
-    public setSoftwareVersion(softwareVersion : string) {
-        this.softwareVersion = softwareVersion;
-    }
+	public setNumberOfConnectors(numberOfConnectors : number) : void {
+		this.numberOfConnectors = numberOfConnectors;
+	}
 
-    public setNumberOfConnectors(numberOfConnectors : number) {
-        this.numberOfConnectors = numberOfConnectors;
-    }
+	/* getter */
 
-    /* getter */
+	public getSerialNumber() : string {
+		return this.serialNumber;
+	}
 
-    public getSerialNumber() : string {
-        return this.serialNumber;
-    }
+	public getModel() : string {
+		return this.model;
+	}
 
-    public getModel() : string {
-        return this.model;
-    }
+	public getHardwareVersion() : string {
+		return this.hardwareVersion;
+	}
 
-    public getHardwareVersion() : string {
-        return this.hardwareVersion;
-    }
+	public getSoftwareVersion() : string {
+		return this.softwareVersion;
+	}
 
-    public getSoftwareVersion() : string {
-        return this.softwareVersion;
-    }
-
-    public getNumberOfConnectors() : number {
-        return this.numberOfConnectors;
-    }
+	public getNumberOfConnectors() : number {
+		return this.numberOfConnectors;
+	}
 
 }
 
