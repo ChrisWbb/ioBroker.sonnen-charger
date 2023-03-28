@@ -31,6 +31,15 @@
 			"label": "interval",
 			"help": "interval_help",
 			"newLine": true
+		},
+		"allowWriteAccess": {
+			"type": "checkbox",
+			"sm": 12,
+			"md": 6,
+			"lg": 6,
+			"label": "allowWriteAccess",
+			"help": "allowWriteAccess_help",
+			"newLine": true
 		}
 	}
 }

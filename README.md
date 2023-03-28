@@ -19,6 +19,10 @@ Integration of sonnenCharger into ioBroker
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+* (ChrisWbb) write access to holding register
+* (ChrisWbb) refactoring async calls
+
 ### 1.0.2 (2023-02-18)
 * (ChrisWbb) fix ESLint findings
 

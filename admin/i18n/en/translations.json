@@ -5,5 +5,7 @@
 	"serverPort": "Port",
 	"serverPort_help": "Port of Modbus-Interface",
 	"interval": "Request interval",
-	"interval_help": "Interval for fetching data (seconds)"
+	"interval_help": "Interval for fetching data (seconds)",
+	"allowWriteAccess": "Allow write access to sonnenCharger",
+	"allowWriteAccess_help": "EXPERIMENTAL be carefull when writing data into sonnenCharger"
 }

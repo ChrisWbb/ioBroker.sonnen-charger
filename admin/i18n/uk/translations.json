@@ -7,5 +7,7 @@
     "Interval": "Інтервал запиту",
     "Interval_help": "Інтервал отримання даних (секунди)",
     "interval": "Інтервал запиту",
-    "interval_help": "Інтервал отримання даних (секунди)"
+    "interval_help": "Інтервал отримання даних (секунди)",
+    "allowWriteAccess": "Дозволити доступ для запису до sonnenCharger",
+    "allowWriteAccess_help": "ЕКСПЕРИМЕНТАЛЬНИЙ Будьте обережні, записуючи дані в sonnenCharger"
 }

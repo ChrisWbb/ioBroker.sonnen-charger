@@ -1,260 +1,260 @@
 {
-  "common": {
-    "name": "sonnen-charger",
-    "version": "1.0.2",
-    "news": {
-      "1.0.2": {
-        "en": "fix ESLint findings",
-        "de": "eSLint-Ergebnisse beheben",
-        "ru": "исправить ESLint выводы",
-        "pt": "corrigir os achados ESLint",
-        "nl": "vertaling:",
-        "fr": "fixer les résultats ESLint",
-        "it": "risolvere i risultati di ESLint",
-        "es": "fijar los resultados de ESLint",
-        "pl": "naprawić wyniki",
-        "uk": "виправити ESLint результати",
-        "zh-cn": "fixESLint的调查结果"
-      },
-      "1.0.1": {
-        "en": "preparation for release\nsmall fixes from adapter check",
-        "de": "vorbereitung auf die freigabe\nkleine befestigungen von adapter-check",
-        "ru": "подготовка к выпуску\nнебольшие исправления от проверки адаптера",
-        "pt": "preparação para a libertação\npequenas correções da verificação do adaptador",
-        "nl": "voorbereiding voor vrijlating\nkleine reparaties van adapter check",
-        "fr": "préparation à la libération\npetites corrections du contrôle de l'adaptateur",
-        "it": "preparazione per il rilascio\npiccole correzioni dal controllo dell'adattatore",
-        "es": "preparación para la liberación\npequeñas correcciones de la comprobación del adaptador",
-        "pl": "przygotowanie do wydania\nmała ustawa z dopasowania adapterowego",
-        "uk": "підготовка до випуску\nмаленькі кріплення з перевірки адаптера",
-        "zh-cn": "准备释放\n适应人员检查的小配件"
-      },
-      "1.0.0": {
-        "en": "initial release",
-        "de": "Erstveröffentlichung",
-        "ru": "Начальная версия",
-        "pt": "lançamento inicial",
-        "nl": "Eerste uitgave",
-        "fr": "Première version",
-        "it": "Versione iniziale",
-        "es": "Versión inicial",
-        "pl": "Pierwsze wydanie",
-        "zh-cn": "首次出版",
-        "uk": "початковий випуск"
-      }
-    },
-    "titleLang": {
-      "en": "sonnenCharger",
-      "de": "sonnenCharger",
-      "ru": "sonnenCharger",
-      "pt": "sonnenCharger",
-      "nl": "sonnenCharger",
-      "fr": "sonnenCharger",
-      "it": "sonnenCharger",
-      "es": "sonnenCharger",
-      "pl": "sonnenCharger",
-      "zh-cn": "sonnenCharger",
-      "uk": "sonnenCharger"
-    },
-    "desc": {
-      "en": "Integration of sonnenCharger into ioBroker",
-      "de": "Integration of sonnenCharger into ioBroker",
-      "ru": "Integration of sonnenCharger into ioBroker",
-      "pt": "Integration of sonnenCharger into ioBroker",
-      "nl": "Integration of sonnenCharger into ioBroker",
-      "fr": "Integration of sonnenCharger into ioBroker",
-      "it": "Integration of sonnenCharger into ioBroker",
-      "es": "Integration of sonnenCharger into ioBroker",
-      "pl": "Integration of sonnenCharger into ioBroker",
-      "zh-cn": "Integration of sonnenCharger into ioBroker",
-      "uk": "Інтеграція sonnenCharger в ioBroker"
-    },
-    "authors": [
-      "ChrisWbb <development@chrweber.de>"
-    ],
-    "keywords": [
-      "sonnen",
-      "charger",
-      "wallbox"
-    ],
-    "license": "MIT",
-    "platform": "Javascript/Node.js",
-    "main": "build/main.js",
-    "icon": "sonnen-charger.png",
-    "enabled": true,
-    "extIcon": "https://raw.githubusercontent.com/ChrisWbb/ioBroker.sonnen-charger/main/admin/sonnen-charger.png",
-    "readme": "https://github.com/ChrisWbb/ioBroker.sonnen-charger/blob/main/README.md",
-    "loglevel": "info",
-    "mode": "daemon",
-    "type": "energy",
-    "compact": true,
-    "connectionType": "local",
-    "dataSource": "poll",
-    "adminUI": {
-      "config": "json"
-    },
-    "dependencies": [
-      {
-        "js-controller": ">=3.3.22"
-      }
-    ],
-    "globalDependencies": [
-      {
-        "admin": ">=5.1.13"
-      }
-    ]
-  },
-  "native": {
-    "serverIp": "",
-    "serverPort": 502,
-    "interval": 60
-  },
-  "objects": [],
-  "instanceObjects": [
-    {
-      "_id": "info",
-      "type": "channel",
-      "common": {
-        "name": "Information"
-      },
-      "native": {}
-    },
-    {
-      "_id": "info.connection",
-      "type": "state",
-      "common": {
-        "role": "indicator.connected",
-        "name": {
-          "en": "Device or service connected",
-          "de": "Gerät- oder Service verbunden",
-          "ru": "Устройство или сервис подключены",
-          "pt": "Dispositivo ou serviço conectado",
-          "nl": "Device of dienst verbonden",
-          "fr": "Appareil ou service connecté",
-          "it": "Dispositivo o servizio collegato",
-          "es": "Dispositivo o servicio conectado",
-          "pl": "Device",
-          "uk": "Пристрої або послуги підключені",
-          "zh-cn": "证人或有关服务"
+    "common": {
+        "name": "sonnen-charger",
+        "version": "1.0.2",
+        "news": {
+            "1.0.2": {
+                "en": "fix ESLint findings",
+                "de": "eSLint-Ergebnisse beheben",
+                "ru": "исправить ESLint выводы",
+                "pt": "corrigir os achados ESLint",
+                "nl": "vertaling:",
+                "fr": "fixer les résultats ESLint",
+                "it": "risolvere i risultati di ESLint",
+                "es": "fijar los resultados de ESLint",
+                "pl": "naprawić wyniki",
+                "uk": "виправити ESLint результати",
+                "zh-cn": "fixESLint的调查结果"
+            },
+            "1.0.1": {
+                "en": "preparation for release\nsmall fixes from adapter check",
+                "de": "vorbereitung auf die freigabe\nkleine befestigungen von adapter-check",
+                "ru": "подготовка к выпуску\nнебольшие исправления от проверки адаптера",
+                "pt": "preparação para a libertação\npequenas correções da verificação do adaptador",
+                "nl": "voorbereiding voor vrijlating\nkleine reparaties van adapter check",
+                "fr": "préparation à la libération\npetites corrections du contrôle de l'adaptateur",
+                "it": "preparazione per il rilascio\npiccole correzioni dal controllo dell'adattatore",
+                "es": "preparación para la liberación\npequeñas correcciones de la comprobación del adaptador",
+                "pl": "przygotowanie do wydania\nmała ustawa z dopasowania adapterowego",
+                "uk": "підготовка до випуску\nмаленькі кріплення з перевірки адаптера",
+                "zh-cn": "准备释放\n适应人员检查的小配件"
+            },
+            "1.0.0": {
+                "en": "initial release",
+                "de": "Erstveröffentlichung",
+                "ru": "Начальная версия",
+                "pt": "lançamento inicial",
+                "nl": "Eerste uitgave",
+                "fr": "Première version",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Pierwsze wydanie",
+                "zh-cn": "首次出版",
+                "uk": "початковий випуск"
+            }
         },
-        "type": "boolean",
-        "read": true,
-        "write": false,
-        "def": false
-      },
-      "native": {}
+        "titleLang": {
+            "en": "sonnenCharger",
+            "de": "sonnenCharger",
+            "ru": "sonnenCharger",
+            "pt": "sonnenCharger",
+            "nl": "sonnenCharger",
+            "fr": "sonnenCharger",
+            "it": "sonnenCharger",
+            "es": "sonnenCharger",
+            "pl": "sonnenCharger",
+            "zh-cn": "sonnenCharger",
+            "uk": "sonnenCharger"
+        },
+        "desc": {
+            "en": "Integration of sonnenCharger into ioBroker",
+            "de": "Integration of sonnenCharger into ioBroker",
+            "ru": "Integration of sonnenCharger into ioBroker",
+            "pt": "Integration of sonnenCharger into ioBroker",
+            "nl": "Integration of sonnenCharger into ioBroker",
+            "fr": "Integration of sonnenCharger into ioBroker",
+            "it": "Integration of sonnenCharger into ioBroker",
+            "es": "Integration of sonnenCharger into ioBroker",
+            "pl": "Integration of sonnenCharger into ioBroker",
+            "zh-cn": "Integration of sonnenCharger into ioBroker",
+            "uk": "Інтеграція sonnenCharger в ioBroker"
+        },
+        "authors": [
+            "ChrisWbb <development@chrweber.de>"
+        ],
+        "keywords": [
+            "sonnen",
+            "charger",
+            "wallbox"
+        ],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "build/main.js",
+        "icon": "sonnen-charger.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/ChrisWbb/ioBroker.sonnen-charger/main/admin/sonnen-charger.png",
+        "readme": "https://github.com/ChrisWbb/ioBroker.sonnen-charger/blob/main/README.md",
+        "loglevel": "info",
+        "mode": "daemon",
+        "type": "energy",
+        "compact": true,
+        "connectionType": "local",
+        "dataSource": "poll",
+        "adminUI": {
+            "config": "json"
+        },
+        "dependencies": [
+            {
+                "js-controller": ">=3.3.22"
+            }
+        ],
+        "globalDependencies": [
+            {
+                "admin": ">=5.1.13"
+            }
+        ]
     },
-    {
-      "_id": "chargerSettings",
-      "type": "channel",
-      "common": {
-        "role": "value",
-        "name": {
-          "en": "Charger settings",
-          "de": "Charger Einstellungen",
-          "ru": "Настройки зарядного устройства",
-          "pt": "Configurações do carregador",
-          "nl": "Charger settings",
-          "fr": "Paramètres de charge",
-          "it": "Impostazioni del caricatore",
-          "es": "Ajustes del cargador",
-          "pl": "Ustawienie Chargera",
-          "uk": "Налаштування зарядного пристрою",
-          "zh-cn": "临时环境"
+    "native": {
+        "serverIp": "",
+        "serverPort": 502,
+        "interval": 60
+    },
+    "objects": [],
+    "instanceObjects": [
+        {
+            "_id": "info",
+            "type": "channel",
+            "common": {
+                "name": "Information"
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.connection",
+            "type": "state",
+            "common": {
+                "role": "indicator.connected",
+                "name": {
+                    "en": "Device or service connected",
+                    "de": "Gerät- oder Service verbunden",
+                    "ru": "Устройство или сервис подключены",
+                    "pt": "Dispositivo ou serviço conectado",
+                    "nl": "Device of dienst verbonden",
+                    "fr": "Appareil ou service connecté",
+                    "it": "Dispositivo o servizio collegato",
+                    "es": "Dispositivo o servicio conectado",
+                    "pl": "Device",
+                    "uk": "Пристрої або послуги підключені",
+                    "zh-cn": "证人或有关服务"
+                },
+                "type": "boolean",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "chargerSettings",
+            "type": "channel",
+            "common": {
+                "role": "value",
+                "name": {
+                    "en": "Charger settings",
+                    "de": "Charger Einstellungen",
+                    "ru": "Настройки зарядного устройства",
+                    "pt": "Configurações do carregador",
+                    "nl": "Charger settings",
+                    "fr": "Paramètres de charge",
+                    "it": "Impostazioni del caricatore",
+                    "es": "Ajustes del cargador",
+                    "pl": "Ustawienie Chargera",
+                    "uk": "Налаштування зарядного пристрою",
+                    "zh-cn": "临时环境"
+                }
+            },
+            "native": {}
+        },
+        {
+            "_id": "chargerSettings.serialNumber",
+            "type": "state",
+            "common": {
+                "role": "value",
+                "name": "Serial number",
+                "type": "string",
+                "read": true,
+                "write": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "chargerSettings.serialNumber",
+            "type": "state",
+            "common": {
+                "role": "value",
+                "name": "Serial number",
+                "type": "string",
+                "read": true,
+                "write": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "chargerSettings.model",
+            "type": "state",
+            "common": {
+                "role": "value",
+                "name": "Model",
+                "type": "string",
+                "read": true,
+                "write": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "chargerSettings.hwVersion",
+            "type": "state",
+            "common": {
+                "role": "value",
+                "name": "Hardware version",
+                "type": "string",
+                "read": true,
+                "write": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "chargerSettings.swVersion",
+            "type": "state",
+            "common": {
+                "role": "value",
+                "name": "Software version",
+                "type": "string",
+                "read": true,
+                "write": false
+            },
+            "native": {}
+        },
+        {
+            "_id": "chargerSettings.numberOfConnectors",
+            "type": "state",
+            "common": {
+                "role": "value",
+                "name": "Number of connectors",
+                "type": "number",
+                "read": true,
+                "write": false,
+                "def": 0
+            },
+            "native": {}
+        },
+        {
+            "_id": "chargerSettings.connectors",
+            "type": "channel",
+            "common": {
+                "role": "value",
+                "name": "connectors"
+            },
+            "native": {}
+        },
+        {
+            "_id": "measurements",
+            "type": "channel",
+            "common": {
+                "role": "value",
+                "name": "measurements"
+            },
+            "native": {}
         }
-      },
-      "native": {}
-    },
-    {
-      "_id": "chargerSettings.serialNumber",
-      "type": "state",
-      "common": {
-        "role": "value",
-        "name": "Serial number",
-        "type": "string",
-        "read": true,
-        "write": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "chargerSettings.serialNumber",
-      "type": "state",
-      "common": {
-        "role": "value",
-        "name": "Serial number",
-        "type": "string",
-        "read": true,
-        "write": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "chargerSettings.model",
-      "type": "state",
-      "common": {
-        "role": "value",
-        "name": "Model",
-        "type": "string",
-        "read": true,
-        "write": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "chargerSettings.hwVersion",
-      "type": "state",
-      "common": {
-        "role": "value",
-        "name": "Hardware version",
-        "type": "string",
-        "read": true,
-        "write": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "chargerSettings.swVersion",
-      "type": "state",
-      "common": {
-        "role": "value",
-        "name": "Software version",
-        "type": "string",
-        "read": true,
-        "write": false
-      },
-      "native": {}
-    },
-    {
-      "_id": "chargerSettings.numberOfConnectors",
-      "type": "state",
-      "common": {
-        "role": "value",
-        "name": "Number of connectors",
-        "type": "number",
-        "read": true,
-        "write": false,
-        "def": 0
-      },
-      "native": {}
-    },
-    {
-      "_id": "chargerSettings.connectors",
-      "type": "channel",
-      "common": {
-        "role": "value",
-        "name": "connectors"
-      },
-      "native": {}
-    },
-    {
-      "_id": "measurements",
-      "type": "channel",
-      "common": {
-        "role": "value",
-        "name": "measurements"
-      },
-      "native": {}
-    }
-  ]
+    ]
 }

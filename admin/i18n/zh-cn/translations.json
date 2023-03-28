@@ -8,5 +8,7 @@
     "serverPort_help": "Modbus接口端口",
     "Interval_help": "获取数据的时间间隔（秒）",
     "interval": "请求间隔",
-    "interval_help": "获取数据的时间间隔（秒）"
+    "interval_help": "获取数据的时间间隔（秒）",
+    "allowWriteAccess": "允许对 sonnenCharger 进行写访问",
+    "allowWriteAccess_help": "将数据写入 sonnenCharger 时要小心"
 }

@@ -22,7 +22,7 @@ __export(RegisterConverterUtil_exports, {
 });
 module.exports = __toCommonJS(RegisterConverterUtil_exports);
 class RegisterConverterUtil {
-  static intArrayToByteArray(intArray) {
+  static int16ArrayToByteArray(intArray) {
     const result = new Array();
     for (let i = 0; i < intArray.length; i++) {
       const lowByte = intArray[i] & 255;
@@ -32,7 +32,7 @@ class RegisterConverterUtil {
     }
     return result;
   }
-  static intArrayToFloat32(intArray) {
+  static int16ArrayToFloat32(intArray) {
     const byteArray = new Array(4);
     byteArray[3] = intArray[1] & 255;
     byteArray[2] = intArray[1] >> 8 & 255;
@@ -56,6 +56,29 @@ class RegisterConverterUtil {
     }
     return result;
   }
+  static int64ToByteArray(long) {
+    const byteArray = [0, 0, 0, 0, 0, 0, 0, 0];
+    for (let index = 0; index < byteArray.length; index++) {
+      const byte = long & 255;
+      byteArray[index] = byte;
+      long = (long - byte) / 256;
+    }
+    return byteArray;
+  }
+  static int64ToInt16Array(int64) {
+    const int16Array = [];
+    for (let i = 48; i >= 0; i -= 16) {
+      const chunk = Number(BigInt(int64) >> BigInt(i) & BigInt(65535));
+      int16Array.push(chunk);
+    }
+    return int16Array;
+  }
+  static float32ToInt16Array(float32) {
+    const float32Array = new Float32Array(1);
+    float32Array[0] = float32;
+    const int16Array = new Uint16Array(float32Array.buffer);
+    return [int16Array[1], int16Array[0]];
+  }
   static getRegisterData(array, start, length) {
     const result = new Array(length);
     for (let i = 0; i < length; i++) {
@@ -65,15 +88,15 @@ class RegisterConverterUtil {
   }
   static getRegisterDataAsString(array, start, length) {
     const intArray = this.getRegisterData(array, start, length);
-    return this.byteArrayToString(this.intArrayToByteArray(intArray));
+    return this.byteArrayToString(this.int16ArrayToByteArray(intArray));
   }
   static getRegisterDataAsInt64(array, start) {
     const intArray = this.getRegisterData(array, start, 4);
-    return this.byteArrayToNumber(this.intArrayToByteArray(intArray));
+    return this.byteArrayToNumber(this.int16ArrayToByteArray(intArray));
   }
   static getRegisterDataAsInt32(array, start) {
     const intArray = this.getRegisterData(array, start, 2);
-    return this.byteArrayToNumber(this.intArrayToByteArray(intArray));
+    return this.byteArrayToNumber(this.int16ArrayToByteArray(intArray));
   }
   static getRegisterDataAsInt16(array, start) {
     const intArray = this.getRegisterData(array, start, 1);
@@ -81,7 +104,7 @@ class RegisterConverterUtil {
   }
   static getRegisterDataAsFloat32(array, start) {
     const intArray = this.getRegisterData(array, start, 2);
-    return this.intArrayToFloat32(intArray);
+    return this.int16ArrayToFloat32(intArray);
   }
 }
 // Annotate the CommonJS export names for ESM import in node:

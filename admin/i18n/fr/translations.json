@@ -8,5 +8,7 @@
     "serverPort_help": "Port de l'interface Modbus",
     "Interval_help": "Intervalle de récupération des données (secondes)",
     "interval": "Intervalle de demande",
-    "interval_help": "Intervalle de récupération des données (secondes)"
+    "interval_help": "Intervalle de récupération des données (secondes)",
+    "allowWriteAccess": "Autoriser l'accès en écriture à sonnenCharger",
+    "allowWriteAccess_help": "EXPERIMENTAL soyez prudent lorsque vous écrivez des données dans sonnenCharger"
 }

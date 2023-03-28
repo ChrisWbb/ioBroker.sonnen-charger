@@ -7,6 +7,7 @@ declare global {
 			serverIp: string;
 			serverPort: number;
 			interval: number;
+			allowWriteAccess: boolean;
 		}
 	}
 }

@@ -10,7 +10,7 @@
 		"wallbox"
 	],
 	"contributors": "",
-	"authorName": "ChrisWbb",
+	"authorName": "Christian Weber",
 	"authorGithub": "ChrisWbb",
 	"authorEmail": "development@chrweber.de",
 	"icon": {
@@ -34,10 +34,22 @@
 			"defaultValue": ""
 		},
 		{
+			"key": "Port",
+			"label": "Port of sonnenCharger",
+			"inputType": "number",
+			"defaultValue": "502"
+		},
+		{
 			"key": "Interval",
 			"label": "Interval for fetching data (seconds)",
 			"inputType": "number",
 			"defaultValue": "60"
+		},
+		{
+			"key": "AllowWriteAccess",
+			"label": "Allow write access to sonnenCharger",
+			"inputType": "checkbox",
+			"defaultValue": "false"
 		}
 	],
 	"language": "TypeScript",

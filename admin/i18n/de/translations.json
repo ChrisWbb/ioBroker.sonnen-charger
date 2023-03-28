@@ -1,12 +1,11 @@
 {
     "sonnen-charger adapter settings": "Adaptereinstellungen für sonnen-charger",
-    "IP-Address": "IP-Address of sonnenCharger",
-    "Interval": "Interval for fetching data (seconds)",
     "serverIp": "IP Adresse",
     "serverIp_help": "IP-Adresse des sonnenChargers",
     "serverPort": "Port",
     "serverPort_help": "Port der Modbus-Schnittstelle",
-    "Interval_help": "Intervall zum Abrufen von Daten (Sekunden)",
     "interval": "Anforderungsintervall",
-    "interval_help": "Intervall zum Abrufen von Daten (Sekunden)"
+    "interval_help": "Intervall zum Abrufen von Daten (Sekunden)",
+    "allowWriteAccess": "Erlaube Schreibzugriff auf sonnenCharger",
+    "allowWriteAccess_help": "EXPERIMENTELL bitte vorsichtig mit dieser Funktion umgehen um Daten in den sonnenCharger zu schreiben"
 }

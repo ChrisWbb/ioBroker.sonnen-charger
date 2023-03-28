@@ -27,6 +27,7 @@ class SonnenCharger extends utils.Adapter {
     });
     this.chargerController = new import_ChargerController.ChargerController();
     this.on("ready", this.onReady.bind(this));
+    this.on("stateChange", this.onStateChange.bind(this));
     this.on("unload", this.onUnload.bind(this));
   }
   async onReady() {
@@ -46,13 +47,95 @@ class SonnenCharger extends utils.Adapter {
     this.log.info("config serverIp: " + this.config.serverIp);
     this.log.info("config serverPort: " + this.config.serverPort);
     this.log.info("config interval: " + this.config.interval);
-    this.log.info("conncet to modbus");
-    this.chargerController.connect(this.config.serverIp, this.config.serverPort);
-    this.createChargerConnectorInfoObjects(1);
-    this.createChargerConnectorMeasurementObjects(1);
-    this.timer = setInterval(async () => {
-      await this.updateChargerData();
-    }, this.config.interval * 1e3);
+    this.log.info("config allowWriteAccess: " + this.config.allowWriteAccess);
+    this.chargerController.connect(this.config.serverIp, this.config.serverPort, this.actionsAfterConnect.bind(this));
+  }
+  onStateChange(id, state) {
+    if (state && state.val != null && state.val != false) {
+      const myRegexp = new RegExp("sonnen-charger\\.(\\d)\\.commands(\\.connectors\\.(\\d))?\\.(.*)");
+      const match = myRegexp.exec(id);
+      if (match != null) {
+        const command = match[4];
+        const connectorNum = parseInt(match[3]);
+        if (!connectorNum) {
+          this.log.info("Received command: <" + command + "> with value <" + state.val + ">");
+          switch (command) {
+            case "restart": {
+              this.log.debug("restart");
+              this.chargerController.commandRestart();
+              this.setState(id, false, true);
+              break;
+            }
+            case "setTime": {
+              this.log.debug("setTime");
+              if (typeof state.val === "number") {
+                this.chargerController.commandSetTime(state.val);
+              }
+              this.setState(id, null, true);
+              break;
+            }
+            default: {
+              this.log.error("Command <" + command + "> not supported");
+            }
+          }
+        } else {
+          this.log.info("Received command: <" + command + "> for connector <" + connectorNum + "> with value <" + state.val + ">");
+          switch (command) {
+            case "stopCharging": {
+              this.log.debug("stopCharging");
+              this.chargerController.commandStopCharging(connectorNum);
+              this.setState(id, false, true);
+              break;
+            }
+            case "pauseCharging": {
+              this.log.debug("pauseCharging");
+              this.chargerController.commandPauseCharging(connectorNum);
+              this.setState(id, false, true);
+              break;
+            }
+            case "setDepartureTime": {
+              this.log.debug("setDepartureTime");
+              if (typeof state.val === "number") {
+                this.chargerController.commandSetDepartureTime(connectorNum, state.val);
+              }
+              this.setState(id, null, true);
+              break;
+            }
+            case "setCurrentSetpoint": {
+              this.log.debug("setCurrentSetpoint");
+              if (typeof state.val === "number") {
+                this.chargerController.commandSetCurrentSetpoint(connectorNum, state.val);
+              }
+              this.setState(id, null, true);
+              break;
+            }
+            case "cancelCurrentSetpoint": {
+              this.log.debug("cancelCurrentSetpoint");
+              this.chargerController.commandCancelCurrentSetpoint(connectorNum);
+              this.setState(id, false, true);
+              break;
+            }
+            case "setPowerSetpoint": {
+              this.log.debug("setPowerSetpoint");
+              if (typeof state.val === "number") {
+                this.chargerController.commandSetPowerSetpoint(connectorNum, state.val);
+              }
+              this.setState(id, null, true);
+              break;
+            }
+            case "cancelPowerSetpoint": {
+              this.log.debug("cancelPowerSetpoint");
+              this.chargerController.commandCancelPowerSetpoint(connectorNum);
+              this.setState(id, false, true);
+              break;
+            }
+            default: {
+              this.log.error("Command <" + command + "> not supported");
+            }
+          }
+        }
+      }
+    }
   }
   onUnload(callback) {
     try {
@@ -63,30 +146,55 @@ class SonnenCharger extends utils.Adapter {
       callback();
     }
   }
-  async updateChargerData() {
-    this.updateChargerInfoData();
-    this.updateChargerConnectorInfoData(1);
-    this.updateChargerConnectorMeasurementObjects(1);
+  actionsAfterConnect() {
+    this.chargerController.fetchChargerInfoData(this.initChargerInfoData.bind(this));
   }
-  async updateChargerInfoData() {
-    this.log.info("updateChargerInfoData");
-    const infoData = await this.chargerController.fetchChargerInfoData();
+  async initChargerInfoData(infoData) {
+    this.infoData = infoData;
+    for (let i = 1; i <= this.infoData.getNumberOfConnectors(); i++) {
+      this.createChargerConnectorInfoObjects(i);
+      this.createChargerConnectorMeasurementObjects(i);
+    }
+    if (this.config.allowWriteAccess) {
+      this.createChargerCommandObjects();
+      for (let i = 1; i <= this.infoData.getNumberOfConnectors(); i++) {
+        this.createChargerConnectorCommandObjects(i);
+      }
+      this.subscribeStates("commands.*");
+    } else {
+      this.deleteChannelAsync("commands");
+    }
     this.setState("chargerSettings.serialNumber", infoData.getSerialNumber(), true);
     this.setState("chargerSettings.model", infoData.getModel(), true);
     this.setState("chargerSettings.hwVersion", infoData.getHardwareVersion(), true);
     this.setState("chargerSettings.swVersion", infoData.getSoftwareVersion(), true);
     this.setState("chargerSettings.numberOfConnectors", infoData.getNumberOfConnectors(), true);
+    for (let i = 1; i <= this.infoData.getNumberOfConnectors(); i++) {
+      this.chargerController.fetchConnectorInfoData(i, this.updateChargerConnectorInfoData.bind(this));
+      this.chargerController.fetchConnectorMeasurementData(i, this.updateChargerConnectorMeasurementObjects.bind(this));
+    }
+    this.timer = setInterval(async () => {
+      this.updateChargerData();
+    }, this.config.interval * 1e3);
+  }
+  async updateChargerData() {
+    if (this.infoData != void 0) {
+      for (let i = 1; i <= this.infoData.getNumberOfConnectors(); i++) {
+        this.chargerController.fetchConnectorInfoData(i, this.updateChargerConnectorInfoData.bind(this));
+        this.chargerController.fetchConnectorMeasurementData(i, this.updateChargerConnectorMeasurementObjects.bind(this));
+      }
+    }
   }
   async createChargerConnectorInfoObjects(num) {
-    this.log.info("createChargerConnectorInfoObjects for connector " + num);
-    await this.setObjectNotExistsAsync("chargerSettings.connectors." + num, {
+    this.log.debug("createChargerConnectorInfoObjects for connector " + num);
+    this.setObjectNotExists("chargerSettings.connectors." + num, {
       type: "channel",
       common: {
-        name: "todo"
+        name: "connector " + num
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("chargerSettings.connectors." + num + ".connectorType", {
+    this.setObjectNotExists("chargerSettings.connectors." + num + ".connectorType", {
       type: "state",
       common: {
         name: "Connector type",
@@ -97,7 +205,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("chargerSettings.connectors." + num + ".numberOfPhases", {
+    this.setObjectNotExists("chargerSettings.connectors." + num + ".numberOfPhases", {
       type: "state",
       common: {
         name: "Number phases",
@@ -108,7 +216,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("chargerSettings.connectors." + num + ".l1ConnectedToPhase", {
+    this.setObjectNotExists("chargerSettings.connectors." + num + ".l1ConnectedToPhase", {
       type: "state",
       common: {
         name: "L1 connected to phase",
@@ -119,7 +227,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("chargerSettings.connectors." + num + ".l2ConnectedToPhase", {
+    this.setObjectNotExists("chargerSettings.connectors." + num + ".l2ConnectedToPhase", {
       type: "state",
       common: {
         name: "L2 connected to phase",
@@ -130,7 +238,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("chargerSettings.connectors." + num + ".l3ConnectedToPhase", {
+    this.setObjectNotExists("chargerSettings.connectors." + num + ".l3ConnectedToPhase", {
       type: "state",
       common: {
         name: "L3 connected to phase",
@@ -141,7 +249,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("chargerSettings.connectors." + num + ".customMaxCurrent", {
+    this.setObjectNotExists("chargerSettings.connectors." + num + ".customMaxCurrent", {
       type: "state",
       common: {
         name: "Custom max current",
@@ -154,26 +262,25 @@ class SonnenCharger extends utils.Adapter {
       native: {}
     });
   }
-  async updateChargerConnectorInfoData(num) {
-    this.log.info("updateChargerConnectorInfoData for connector " + num);
-    const infoData = await this.chargerController.fetchConnectorInfoData(num);
-    this.setState("chargerSettings.connectors." + num + ".connectorType", infoData.getConnectorTypeAsString(), true);
-    this.setState("chargerSettings.connectors." + num + ".numberOfPhases", infoData.getNumberOfPhases(), true);
-    this.setState("chargerSettings.connectors." + num + ".l1ConnectedToPhase", infoData.getL1ConnectedToPhase(), true);
-    this.setState("chargerSettings.connectors." + num + ".l2ConnectedToPhase", infoData.getL2ConnectedToPhase(), true);
-    this.setState("chargerSettings.connectors." + num + ".l3ConnectedToPhase", infoData.getL3ConnectedToPhase(), true);
-    this.setState("chargerSettings.connectors." + num + ".customMaxCurrent", infoData.getCustomMaxCurrent(), true);
+  async updateChargerConnectorInfoData(num, data) {
+    this.log.debug("updateChargerConnectorInfoData for connector " + num);
+    this.setState("chargerSettings.connectors." + num + ".connectorType", data.getConnectorTypeAsString(), true);
+    this.setState("chargerSettings.connectors." + num + ".numberOfPhases", data.getNumberOfPhases(), true);
+    this.setState("chargerSettings.connectors." + num + ".l1ConnectedToPhase", data.getL1ConnectedToPhase(), true);
+    this.setState("chargerSettings.connectors." + num + ".l2ConnectedToPhase", data.getL2ConnectedToPhase(), true);
+    this.setState("chargerSettings.connectors." + num + ".l3ConnectedToPhase", data.getL3ConnectedToPhase(), true);
+    this.setState("chargerSettings.connectors." + num + ".customMaxCurrent", data.getCustomMaxCurrent(), true);
   }
   async createChargerConnectorMeasurementObjects(num) {
-    this.log.info("createChargerConnectorMeasurementObjects for connector " + num);
-    await this.setObjectNotExistsAsync("measurements." + num, {
+    this.log.debug("createChargerConnectorMeasurementObjects for connector " + num);
+    this.setObjectNotExists("measurements." + num, {
       type: "channel",
       common: {
-        name: "measurements"
+        name: "connector " + num
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".connectorStatus", {
+    this.setObjectNotExists("measurements." + num + ".connectorStatus", {
       type: "state",
       common: {
         name: "Connnector status id",
@@ -184,7 +291,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".connectorStatusLabel", {
+    this.setObjectNotExists("measurements." + num + ".connectorStatusLabel", {
       type: "state",
       common: {
         name: "Connnector status",
@@ -195,7 +302,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".measuredVehicleNumberOfPhases", {
+    this.setObjectNotExists("measurements." + num + ".measuredVehicleNumberOfPhases", {
       type: "state",
       common: {
         name: "Measured vehicle number of phases id",
@@ -206,7 +313,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".measuredVehicleNumberOfPhasesLabel", {
+    this.setObjectNotExists("measurements." + num + ".measuredVehicleNumberOfPhasesLabel", {
       type: "state",
       common: {
         name: "Measured vehicle number of phases",
@@ -217,7 +324,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".evMaxPhaseCurrent", {
+    this.setObjectNotExists("measurements." + num + ".evMaxPhaseCurrent", {
       type: "state",
       common: {
         name: "EV max phase current",
@@ -229,7 +336,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".targetCurrentFromPowerMgm", {
+    this.setObjectNotExists("measurements." + num + ".targetCurrentFromPowerMgm", {
       type: "state",
       common: {
         name: "Target current from power mgm or modbus",
@@ -241,7 +348,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".frequency", {
+    this.setObjectNotExists("measurements." + num + ".frequency", {
       type: "state",
       common: {
         name: "Frequency",
@@ -253,7 +360,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".voltageL1", {
+    this.setObjectNotExists("measurements." + num + ".voltageL1", {
       type: "state",
       common: {
         name: "L-N voltage (L1)",
@@ -265,7 +372,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".voltageL2", {
+    this.setObjectNotExists("measurements." + num + ".voltageL2", {
       type: "state",
       common: {
         name: "L-N voltage (L2)",
@@ -277,7 +384,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".voltageL3", {
+    this.setObjectNotExists("measurements." + num + ".voltageL3", {
       type: "state",
       common: {
         name: "L-N voltage (L3)",
@@ -289,7 +396,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".currentL1", {
+    this.setObjectNotExists("measurements." + num + ".currentL1", {
       type: "state",
       common: {
         name: "Curent (L1)",
@@ -301,7 +408,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".currentL2", {
+    this.setObjectNotExists("measurements." + num + ".currentL2", {
       type: "state",
       common: {
         name: "Curent (L2)",
@@ -313,7 +420,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".currentL3", {
+    this.setObjectNotExists("measurements." + num + ".currentL3", {
       type: "state",
       common: {
         name: "Curent (L3)",
@@ -325,7 +432,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".activePowerL1", {
+    this.setObjectNotExists("measurements." + num + ".activePowerL1", {
       type: "state",
       common: {
         name: "Active power (L1)",
@@ -337,7 +444,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".activePowerL2", {
+    this.setObjectNotExists("measurements." + num + ".activePowerL2", {
       type: "state",
       common: {
         name: "Active power (L2)",
@@ -349,7 +456,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".activePowerL3", {
+    this.setObjectNotExists("measurements." + num + ".activePowerL3", {
       type: "state",
       common: {
         name: "Active power (L3)",
@@ -361,7 +468,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".activePowerTotal", {
+    this.setObjectNotExists("measurements." + num + ".activePowerTotal", {
       type: "state",
       common: {
         name: "Active power (total)",
@@ -373,7 +480,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".powerFactor", {
+    this.setObjectNotExists("measurements." + num + ".powerFactor", {
       type: "state",
       common: {
         name: "Power factor",
@@ -384,7 +491,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".totalImportedActiveEnergyInRunningSession", {
+    this.setObjectNotExists("measurements." + num + ".totalImportedActiveEnergyInRunningSession", {
       type: "state",
       common: {
         name: "Total imported active energy in running session",
@@ -396,7 +503,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".runningSessionDuration", {
+    this.setObjectNotExists("measurements." + num + ".runningSessionDuration", {
       type: "state",
       common: {
         name: "Running session duration",
@@ -408,7 +515,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".runningSessionDepartureTime", {
+    this.setObjectNotExists("measurements." + num + ".runningSessionDepartureTime", {
       type: "state",
       common: {
         name: "Running session departure time",
@@ -420,7 +527,18 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".runningSessionID", {
+    this.setObjectNotExists("measurements." + num + ".runningSessionDepartureTimeISO", {
+      type: "state",
+      common: {
+        name: "Running session departure time in ISO UTC format",
+        type: "string",
+        role: "value",
+        read: true,
+        write: false
+      },
+      native: {}
+    });
+    this.setObjectNotExists("measurements." + num + ".runningSessionID", {
       type: "state",
       common: {
         name: "Running session ID",
@@ -431,7 +549,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".evMaxPower", {
+    this.setObjectNotExists("measurements." + num + ".evMaxPower", {
       type: "state",
       common: {
         name: "EV max power",
@@ -443,7 +561,7 @@ class SonnenCharger extends utils.Adapter {
       },
       native: {}
     });
-    await this.setObjectNotExistsAsync("measurements." + num + ".evPlannedEnergy", {
+    this.setObjectNotExists("measurements." + num + ".evPlannedEnergy", {
       type: "state",
       common: {
         name: "EV planned energy",
@@ -456,33 +574,169 @@ class SonnenCharger extends utils.Adapter {
       native: {}
     });
   }
-  async updateChargerConnectorMeasurementObjects(num) {
-    this.log.info("updateChargerConnectorMeasurementObjects for connector " + num);
-    const infoData = await this.chargerController.fetchConnectorMeasurementData(num);
-    this.setState("measurements." + num + ".connectorStatus", infoData.getConnectorStatus(), true);
-    this.setState("measurements." + num + ".connectorStatusLabel", infoData.getConnectorStatusAsString(), true);
-    this.setState("measurements." + num + ".measuredVehicleNumberOfPhases", infoData.getMeasuredVehicleNumberOfPhases(), true);
-    this.setState("measurements." + num + ".measuredVehicleNumberOfPhasesLabel", infoData.getMeasuredVehicleNumberOfPhasesAsString(), true);
-    this.setState("measurements." + num + ".evMaxPhaseCurrent", infoData.getEvMaxPhaseCurrent(), true);
-    this.setState("measurements." + num + ".targetCurrentFromPowerMgm", infoData.getTargetCurrentFromPowerMgm(), true);
-    this.setState("measurements." + num + ".frequency", infoData.getFrequency(), true);
-    this.setState("measurements." + num + ".voltageL1", infoData.getVoltageL1(), true);
-    this.setState("measurements." + num + ".voltageL2", infoData.getVoltageL2(), true);
-    this.setState("measurements." + num + ".voltageL3", infoData.getVoltageL3(), true);
-    this.setState("measurements." + num + ".currentL1", infoData.getCurrentL1(), true);
-    this.setState("measurements." + num + ".currentL2", infoData.getCurrentL2(), true);
-    this.setState("measurements." + num + ".currentL3", infoData.getCurrentL3(), true);
-    this.setState("measurements." + num + ".activePowerL1", infoData.getActivePowerL1(), true);
-    this.setState("measurements." + num + ".activePowerL2", infoData.getActivePowerL2(), true);
-    this.setState("measurements." + num + ".activePowerL3", infoData.getActivePowerL3(), true);
-    this.setState("measurements." + num + ".activePowerTotal", infoData.getActivePowerTotal(), true);
-    this.setState("measurements." + num + ".powerFactor", infoData.getPowerFactor(), true);
-    this.setState("measurements." + num + ".totalImportedActiveEnergyInRunningSession", infoData.getTotalImportedActiveEnergyInRunningSession(), true);
-    this.setState("measurements." + num + ".runningSessionDuration", infoData.getRunningSessionDuration(), true);
-    this.setState("measurements." + num + ".runningSessionDepartureTime", infoData.getRunningSessionDepartureTime(), true);
-    this.setState("measurements." + num + ".runningSessionID", infoData.getRunningSessionID(), true);
-    this.setState("measurements." + num + ".evMaxPower", infoData.getEvMaxPower(), true);
-    this.setState("measurements." + num + ".evPlannedEnergy", infoData.getEvPlannedEnergy(), true);
+  async updateChargerConnectorMeasurementObjects(num, data) {
+    this.log.debug("updateChargerConnectorMeasurementObjects for connector " + num);
+    this.setState("measurements." + num + ".connectorStatus", data.getConnectorStatus(), true);
+    this.setState("measurements." + num + ".connectorStatusLabel", data.getConnectorStatusAsString(), true);
+    this.setState("measurements." + num + ".measuredVehicleNumberOfPhases", data.getMeasuredVehicleNumberOfPhases(), true);
+    this.setState("measurements." + num + ".measuredVehicleNumberOfPhasesLabel", data.getMeasuredVehicleNumberOfPhasesAsString(), true);
+    this.setState("measurements." + num + ".evMaxPhaseCurrent", data.getEvMaxPhaseCurrent(), true);
+    this.setState("measurements." + num + ".targetCurrentFromPowerMgm", data.getTargetCurrentFromPowerMgm(), true);
+    this.setState("measurements." + num + ".frequency", data.getFrequency(), true);
+    this.setState("measurements." + num + ".voltageL1", data.getVoltageL1(), true);
+    this.setState("measurements." + num + ".voltageL2", data.getVoltageL2(), true);
+    this.setState("measurements." + num + ".voltageL3", data.getVoltageL3(), true);
+    this.setState("measurements." + num + ".currentL1", data.getCurrentL1(), true);
+    this.setState("measurements." + num + ".currentL2", data.getCurrentL2(), true);
+    this.setState("measurements." + num + ".currentL3", data.getCurrentL3(), true);
+    this.setState("measurements." + num + ".activePowerL1", data.getActivePowerL1(), true);
+    this.setState("measurements." + num + ".activePowerL2", data.getActivePowerL2(), true);
+    this.setState("measurements." + num + ".activePowerL3", data.getActivePowerL3(), true);
+    this.setState("measurements." + num + ".activePowerTotal", data.getActivePowerTotal(), true);
+    this.setState("measurements." + num + ".powerFactor", data.getPowerFactor(), true);
+    this.setState("measurements." + num + ".totalImportedActiveEnergyInRunningSession", data.getTotalImportedActiveEnergyInRunningSession(), true);
+    this.setState("measurements." + num + ".runningSessionDuration", data.getRunningSessionDuration(), true);
+    this.setState("measurements." + num + ".runningSessionDepartureTime", data.getRunningSessionDepartureTime(), true);
+    this.setState("measurements." + num + ".runningSessionDepartureTimeISO", new Date(data.getRunningSessionDepartureTime() * 1e3).toISOString(), true);
+    this.setState("measurements." + num + ".runningSessionID", data.getRunningSessionID(), true);
+    this.setState("measurements." + num + ".evMaxPower", data.getEvMaxPower(), true);
+    this.setState("measurements." + num + ".evPlannedEnergy", data.getEvPlannedEnergy(), true);
+  }
+  async createChargerCommandObjects() {
+    this.log.debug("createChargerCommandObjects");
+    this.setObjectNotExists("commands", {
+      type: "channel",
+      common: {
+        name: "Commands"
+      },
+      native: {}
+    });
+    this.setObjectNotExists("commands.restart", {
+      type: "state",
+      common: {
+        name: "Restart sonnen-charger",
+        role: "button",
+        def: false,
+        type: "boolean",
+        read: false,
+        write: true
+      },
+      native: {}
+    });
+    this.setObjectNotExists("commands.setTime", {
+      type: "state",
+      common: {
+        name: "Set time UTC",
+        role: "value",
+        def: false,
+        type: "number",
+        read: false,
+        write: true,
+        unit: " s"
+      },
+      native: {}
+    });
+    this.setObjectNotExists("commands.connectors", {
+      type: "channel",
+      common: {
+        name: "Connector Commands"
+      },
+      native: {}
+    });
+  }
+  async createChargerConnectorCommandObjects(num) {
+    this.log.debug("createChargerConnectorCommandObjects for connector " + num);
+    this.setObjectNotExists("commands.connectors." + num, {
+      type: "channel",
+      common: {
+        name: "connector " + num
+      },
+      native: {}
+    });
+    this.setObjectNotExists("commands.connectors." + num + ".stopCharging", {
+      type: "state",
+      common: {
+        name: "Stop charging",
+        role: "button.stop",
+        def: false,
+        type: "boolean",
+        read: false,
+        write: true
+      },
+      native: {}
+    });
+    this.setObjectNotExists("commands.connectors." + num + ".pauseCharging", {
+      type: "state",
+      common: {
+        name: "Pause charging",
+        role: "button.pause",
+        def: false,
+        type: "boolean",
+        read: false,
+        write: true
+      },
+      native: {}
+    });
+    this.setObjectNotExists("commands.connectors." + num + ".setDepartureTime", {
+      type: "state",
+      common: {
+        name: "Set departure time",
+        type: "number",
+        role: "value",
+        read: false,
+        write: true,
+        unit: " s"
+      },
+      native: {}
+    });
+    this.setObjectNotExists("commands.connectors." + num + ".setCurrentSetpoint", {
+      type: "state",
+      common: {
+        name: "Set current setpoint",
+        type: "number",
+        role: "value",
+        read: false,
+        write: true,
+        unit: "A"
+      },
+      native: {}
+    });
+    this.setObjectNotExists("commands.connectors." + num + ".cancelCurrentSetpoint", {
+      type: "state",
+      common: {
+        name: "Cancel current setpoint",
+        role: "button",
+        def: false,
+        type: "boolean",
+        read: false,
+        write: true
+      },
+      native: {}
+    });
+    this.setObjectNotExists("commands.connectors." + num + ".setPowerSetpoint", {
+      type: "state",
+      common: {
+        name: "Set power setpoint",
+        type: "number",
+        role: "value",
+        read: false,
+        write: true,
+        unit: "kW"
+      },
+      native: {}
+    });
+    this.setObjectNotExists("commands.connectors." + num + ".cancelPowerSetpoint", {
+      type: "state",
+      common: {
+        name: "Cancel power setpoint",
+        role: "button",
+        def: false,
+        type: "boolean",
+        read: false,
+        write: true
+      },
+      native: {}
+    });
   }
 }
 if (require.main !== module) {

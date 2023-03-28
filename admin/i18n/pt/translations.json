@@ -8,5 +8,7 @@
     "serverPort_help": "Porta da interface Modbus",
     "Interval_help": "Intervalo para buscar dados (segundos)",
     "interval": "Intervalo de solicitação",
-    "interval_help": "Intervalo para buscar dados (segundos)"
+    "interval_help": "Intervalo para buscar dados (segundos)",
+    "allowWriteAccess": "Permitir acesso de gravação ao sonnenCharger",
+    "allowWriteAccess_help": "EXPERIMENTAL tenha cuidado ao gravar dados no sonnenCharger"
 }

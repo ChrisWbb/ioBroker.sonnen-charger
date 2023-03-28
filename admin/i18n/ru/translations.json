@@ -8,5 +8,7 @@
     "serverPort_help": "Порт Modbus-интерфейса",
     "Interval_help": "Интервал получения данных (секунды)",
     "interval": "Интервал запроса",
-    "interval_help": "Интервал получения данных (секунды)"
+    "interval_help": "Интервал получения данных (секунды)",
+    "allowWriteAccess": "Разрешить доступ для записи к sonnenCharger",
+    "allowWriteAccess_help": "ЭКСПЕРИМЕНТАЛЬНАЯ ЧАСТЬ Будьте осторожны при записи данных в sonnenCharger"
 }

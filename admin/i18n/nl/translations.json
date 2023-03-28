@@ -8,5 +8,7 @@
     "serverPort_help": "Poort van Modbus-interface",
     "Interval_help": "Interval voor het ophalen van gegevens (seconden)",
     "interval": "Interval aanvragen",
-    "interval_help": "Interval voor het ophalen van gegevens (seconden)"
+    "interval_help": "Interval voor het ophalen van gegevens (seconden)",
+    "allowWriteAccess": "Geef schrijftoegang tot sonnenCharger",
+    "allowWriteAccess_help": "EXPERIMENTEEL wees voorzichtig bij het schrijven van gegevens naar sonnenCharger"
 }
