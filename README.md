@@ -22,6 +22,7 @@ Integration of sonnenCharger into ioBroker
 ### **WORK IN PROGRESS**
 * (ChrisWbb) write access to holding register
 * (ChrisWbb) refactoring async calls
+* (ChrisWbb) smaller changes based on suggestions from review
 
 ### 1.0.2 (2023-02-18)
 * (ChrisWbb) fix ESLint findings
