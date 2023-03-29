@@ -11,7 +11,7 @@ import { ChargerConnectorMeasurementData } from "./ChargerConnectorMeasurementDa
 class SonnenCharger extends utils.Adapter {
 
 	private chargerController : ChargerController;
-	private timer: NodeJS.Timeout | undefined;
+	private updateInterval: ioBroker.Interval | undefined;
 	private infoData : ChargerInfoData | undefined;
 
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
@@ -58,7 +58,11 @@ class SonnenCharger extends utils.Adapter {
 	}
 
 	private onStateChange(id: string, state: ioBroker.State | null | undefined): void {
-		if (state && state.val != null && state.val != false) {
+		if (!id || !state || state.ack) {
+			return;
+		} // Ignore acknowledged state changes
+
+		if (state.val != null && state.val != false) {
 
 			const myRegexp = new RegExp("sonnen-charger\\.(\\d)\\.commands(\\.connectors\\.(\\d))?\\.(.*)");
 			const match = myRegexp.exec(id);
@@ -160,7 +164,9 @@ class SonnenCharger extends utils.Adapter {
 			// Reset the connection indicator during shutdown
 			this.setState("info.connection", false, true);
 
-			clearInterval(this.timer);
+			if (this.updateInterval){
+				this.clearInterval(this.updateInterval);
+			}
 
 			callback();
 		} catch (e) {
@@ -206,7 +212,7 @@ class SonnenCharger extends utils.Adapter {
 			this.chargerController.fetchConnectorMeasurementData(i, this.updateChargerConnectorMeasurementObjects.bind(this));
 		}
 
-		this.timer = setInterval(async () => {
+		this.updateInterval = this.setInterval(async () => {
 			this.updateChargerData();
 		}, this.config.interval * 1000);
 	}

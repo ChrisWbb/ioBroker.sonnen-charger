@@ -178,18 +178,6 @@
             "native": {}
         },
         {
-            "_id": "chargerSettings.serialNumber",
-            "type": "state",
-            "common": {
-                "role": "value",
-                "name": "Serial number",
-                "type": "string",
-                "read": true,
-                "write": false
-            },
-            "native": {}
-        },
-        {
             "_id": "chargerSettings.model",
             "type": "state",
             "common": {

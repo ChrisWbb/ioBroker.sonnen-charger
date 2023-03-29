@@ -51,7 +51,10 @@ class SonnenCharger extends utils.Adapter {
     this.chargerController.connect(this.config.serverIp, this.config.serverPort, this.actionsAfterConnect.bind(this));
   }
   onStateChange(id, state) {
-    if (state && state.val != null && state.val != false) {
+    if (!id || !state || state.ack) {
+      return;
+    }
+    if (state.val != null && state.val != false) {
       const myRegexp = new RegExp("sonnen-charger\\.(\\d)\\.commands(\\.connectors\\.(\\d))?\\.(.*)");
       const match = myRegexp.exec(id);
       if (match != null) {
@@ -140,7 +143,9 @@ class SonnenCharger extends utils.Adapter {
   onUnload(callback) {
     try {
       this.setState("info.connection", false, true);
-      clearInterval(this.timer);
+      if (this.updateInterval) {
+        this.clearInterval(this.updateInterval);
+      }
       callback();
     } catch (e) {
       callback();
@@ -173,7 +178,7 @@ class SonnenCharger extends utils.Adapter {
       this.chargerController.fetchConnectorInfoData(i, this.updateChargerConnectorInfoData.bind(this));
       this.chargerController.fetchConnectorMeasurementData(i, this.updateChargerConnectorMeasurementObjects.bind(this));
     }
-    this.timer = setInterval(async () => {
+    this.updateInterval = this.setInterval(async () => {
       this.updateChargerData();
     }, this.config.interval * 1e3);
   }
