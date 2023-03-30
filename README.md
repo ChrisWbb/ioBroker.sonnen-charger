@@ -112,7 +112,7 @@ After you have created an instance of the apdater you have to configure several 
 	### **WORK IN PROGRESS**
 -->
 
-**WORK IN PROGRESS**
+### **WORK IN PROGRESS**
 * (ChrisWbb) write access to holding register
 * (ChrisWbb) refactoring async calls
 * (ChrisWbb) smaller changes based on suggestions from review
