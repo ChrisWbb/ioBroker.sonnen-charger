@@ -1,21 +1,8 @@
 {
   "common": {
     "name": "sonnen-charger",
-    "version": "1.1.0",
+    "version": "1.0.2",
     "news": {
-      "1.1.0": {
-        "en": "write access to holding register\nrefactoring async calls\nsmaller changes based on suggestions from review",
-        "de": "schreibzugriff auf register\nrefactoring async anrufe\nkleinere änderungen basierend auf vorschlägen der überprüfung",
-        "ru": "написать доступ к холдингу\nрефакторинг async звонки\nменьшие изменения, основанные на предложениях от обзора",
-        "pt": "acesso de gravação para manter o registro\nrefactoring async chamadas\nmudanças menores com base em sugestões de revisão",
-        "nl": "schrijf toegang tot het vasthouden van register\nvertaling:\nkleinere veranderingen gebaseerd op suggesties van beoordelingen",
-        "fr": "accès par écrit au registre de tenue\nrefactoring async calls\nmodifications plus petites fondées sur les suggestions issues de l ' examen",
-        "it": "scrivere l'accesso alla registrazione\nrefactoring chiamate asincroni\ncambiamenti più piccoli in base ai suggerimenti della recensione",
-        "es": "escriba acceso al registro de tenencia\nrefactoring async calls\ncambios menores basados en sugerencias del examen",
-        "pl": "pisanie dostępu do rejestru\nrefaktor\nniewielkie zmiany oparte na sugestii z przeglądu",
-        "uk": "запис доступу до реєстру\nрефакторинг асинхронних дзвінків\nменші зміни на основі пропозицій",
-        "zh-cn": "查阅登记册\n重新定性呼吁\n基于审查建议的较小变化"
-      },
       "1.0.2": {
         "en": "fix ESLint findings",
         "de": "eSLint-Ergebnisse beheben",
