@@ -111,6 +111,7 @@ After you have created an instance of the apdater you have to configure several 
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
+
 **WORK IN PROGRESS**
 * (ChrisWbb) write access to holding register
 * (ChrisWbb) refactoring async calls
