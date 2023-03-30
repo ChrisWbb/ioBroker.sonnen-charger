@@ -321,7 +321,7 @@ class SonnenCharger extends utils.Adapter {
     this.setObjectNotExists("measurements." + num + ".measuredVehicleNumberOfPhasesLabel", {
       type: "state",
       common: {
-        name: "Measured vehicle number of phases",
+        name: "Measured vehicle number of phases label",
         type: "string",
         role: "value",
         read: true,
