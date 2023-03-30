@@ -111,7 +111,7 @@ After you have created an instance of the apdater you have to configure several 
 	Placeholder for the next version (at the beginning of the line):
 	### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 1.1.1 (2023-03-30)
 * (ChrisWbb) fixed release problem
 
 ### 1.1.0 (2023-03-30)

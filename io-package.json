@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sonnen-charger",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "news": {
+      "1.1.1": {
+        "en": "fixed release problem",
+        "de": "problem der veröffentlichung",
+        "ru": "исправлена проблема выпуска",
+        "pt": "problema de liberação fixa",
+        "nl": "loslaten probleem",
+        "fr": "problème de libération fixe",
+        "it": "problema di rilascio fisso",
+        "es": "problema de liberación fija",
+        "pl": "problem naprawczy",
+        "uk": "виправлена проблема випуску",
+        "zh-cn": "固定释放问题"
+      },
       "1.1.0": {
         "en": "write access to holding register\nrefactoring async calls\nsmaller changes based on suggestions from review\nupdate readme",
         "de": "schreibzugriff auf register\nrefactoring async anrufe\nkleinere änderungen basierend auf vorschlägen der überprüfung\nupdate readme",
