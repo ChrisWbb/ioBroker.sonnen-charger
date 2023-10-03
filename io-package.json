@@ -195,7 +195,7 @@
       "_id": "chargerSettings.serialNumber",
       "type": "state",
       "common": {
-        "role": "value",
+        "role": "info.serial",
         "name": "Serial number",
         "type": "string",
         "read": true,
@@ -219,7 +219,7 @@
       "_id": "chargerSettings.hwVersion",
       "type": "state",
       "common": {
-        "role": "value",
+        "role": "info.hardware",
         "name": "Hardware version",
         "type": "string",
         "read": true,
@@ -231,7 +231,7 @@
       "_id": "chargerSettings.swVersion",
       "type": "state",
       "common": {
-        "role": "value",
+        "role": "info.firmware",
         "name": "Software version",
         "type": "string",
         "read": true,

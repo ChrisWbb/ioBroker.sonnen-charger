@@ -109,7 +109,6 @@ class SonnenCharger extends utils.Adapter {
               if (typeof state.val === "number") {
                 this.chargerController.commandSetCurrentSetpoint(connectorNum, state.val);
               }
-              this.setState(id, null, true);
               break;
             }
             case "cancelCurrentSetpoint": {
@@ -204,7 +203,7 @@ class SonnenCharger extends utils.Adapter {
       common: {
         name: "Connector type",
         type: "string",
-        role: "indicator",
+        role: "value",
         read: true,
         write: false
       },
@@ -215,7 +214,7 @@ class SonnenCharger extends utils.Adapter {
       common: {
         name: "Number phases",
         type: "number",
-        role: "indicator",
+        role: "value",
         read: true,
         write: false
       },
@@ -226,7 +225,7 @@ class SonnenCharger extends utils.Adapter {
       common: {
         name: "L1 connected to phase",
         type: "number",
-        role: "indicator",
+        role: "value",
         read: true,
         write: false
       },
@@ -237,7 +236,7 @@ class SonnenCharger extends utils.Adapter {
       common: {
         name: "L2 connected to phase",
         type: "number",
-        role: "indicator",
+        role: "value",
         read: true,
         write: false
       },
@@ -248,7 +247,7 @@ class SonnenCharger extends utils.Adapter {
       common: {
         name: "L3 connected to phase",
         type: "number",
-        role: "indicator",
+        role: "value",
         read: true,
         write: false
       },
@@ -259,7 +258,7 @@ class SonnenCharger extends utils.Adapter {
       common: {
         name: "Custom max current",
         type: "number",
-        role: "indicator",
+        role: "value.current",
         read: true,
         write: false,
         unit: "A"
@@ -334,7 +333,7 @@ class SonnenCharger extends utils.Adapter {
       common: {
         name: "EV max phase current",
         type: "number",
-        role: "value",
+        role: "value.current",
         read: true,
         write: false,
         unit: "A"
@@ -346,7 +345,7 @@ class SonnenCharger extends utils.Adapter {
       common: {
         name: "Target current from power mgm or modbus",
         type: "number",
-        role: "value",
+        role: "value.current",
         read: true,
         write: false,
         unit: "A"
@@ -370,7 +369,7 @@ class SonnenCharger extends utils.Adapter {
       common: {
         name: "L-N voltage (L1)",
         type: "number",
-        role: "value",
+        role: "value.voltage",
         read: true,
         write: false,
         unit: "V"
@@ -382,7 +381,7 @@ class SonnenCharger extends utils.Adapter {
       common: {
         name: "L-N voltage (L2)",
         type: "number",
-        role: "value",
+        role: "value.voltage",
         read: true,
         write: false,
         unit: "V"
@@ -394,7 +393,7 @@ class SonnenCharger extends utils.Adapter {
       common: {
         name: "L-N voltage (L3)",
         type: "number",
-        role: "value",
+        role: "value.voltage",
         read: true,
         write: false,
         unit: "V"
@@ -406,7 +405,7 @@ class SonnenCharger extends utils.Adapter {
       common: {
         name: "Curent (L1)",
         type: "number",
-        role: "value",
+        role: "value.current",
         read: true,
         write: false,
         unit: "A"
@@ -418,7 +417,7 @@ class SonnenCharger extends utils.Adapter {
       common: {
         name: "Curent (L2)",
         type: "number",
-        role: "value",
+        role: "value.current",
         read: true,
         write: false,
         unit: "A"
@@ -430,7 +429,7 @@ class SonnenCharger extends utils.Adapter {
       common: {
         name: "Curent (L3)",
         type: "number",
-        role: "value",
+        role: "value.current",
         read: true,
         write: false,
         unit: "A"
@@ -442,7 +441,7 @@ class SonnenCharger extends utils.Adapter {
       common: {
         name: "Active power (L1)",
         type: "number",
-        role: "value",
+        role: "value.power",
         read: true,
         write: false,
         unit: "kW"
@@ -454,7 +453,7 @@ class SonnenCharger extends utils.Adapter {
       common: {
         name: "Active power (L2)",
         type: "number",
-        role: "value",
+        role: "value.power",
         read: true,
         write: false,
         unit: "kW"
@@ -466,7 +465,7 @@ class SonnenCharger extends utils.Adapter {
       common: {
         name: "Active power (L3)",
         type: "number",
-        role: "value",
+        role: "value.power",
         read: true,
         write: false,
         unit: "kW"
@@ -478,7 +477,7 @@ class SonnenCharger extends utils.Adapter {
       common: {
         name: "Active power (total)",
         type: "number",
-        role: "value",
+        role: "value.power",
         read: true,
         write: false,
         unit: "kW"
@@ -501,7 +500,7 @@ class SonnenCharger extends utils.Adapter {
       common: {
         name: "Total imported active energy in running session",
         type: "number",
-        role: "value",
+        role: "value.power.consumption",
         read: true,
         write: false,
         unit: "kWh"
@@ -513,7 +512,7 @@ class SonnenCharger extends utils.Adapter {
       common: {
         name: "Running session duration",
         type: "number",
-        role: "value",
+        role: "value.interval",
         read: true,
         write: false,
         unit: "s"
