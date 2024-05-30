@@ -7,11 +7,7 @@
     "email": "development@chrweber.de"
   },
   "homepage": "https://github.com/ChrisWbb/ioBroker.sonnen-charger",
-  "licenseInformation": {
-    "license": "MIT",
-    "type": "free",
-    "link": "https://github.com/ioBroker/ioBroker.hm-rpc/blob/master/LICENSE"
-  },
+  "license": "MIT",
   "keywords": [
     "sonnen",
     "charger",
