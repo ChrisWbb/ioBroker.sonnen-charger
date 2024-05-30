@@ -107,6 +107,10 @@ After you have created an instance of the apdater you have to configure several 
 |cancelPowerSetpoint|Cancel power setpoint|button||W||
 
 ## Changelog
+
+## **WORK IN PROGRESS**
+* (ChrisWbb) fix findings of adapter checker
+
 ### 1.2.0 (2024-05-30)
 * (ChrisWbb) update dependancy versions
 * (ChrisWbb) fix finding of adapter checker

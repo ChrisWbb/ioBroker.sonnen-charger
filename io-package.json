@@ -122,7 +122,6 @@
       "link": "https://github.com/ChrisWbb/ioBroker.sonnen-charger/blob/main/LICENSE"
     },
     "platform": "Javascript/Node.js",
-    "main": "build/main.js",
     "icon": "sonnen-charger.png",
     "enabled": true,
     "extIcon": "https://raw.githubusercontent.com/ChrisWbb/ioBroker.sonnen-charger/main/admin/sonnen-charger.png",
