@@ -26,6 +26,7 @@ var import_ChargerController = require("./ChargerController");
 class SonnenCharger extends utils.Adapter {
   chargerController;
   updateInterval;
+  updateTimeout;
   infoData;
   constructor(options = {}) {
     super({
@@ -145,7 +146,7 @@ class SonnenCharger extends utils.Adapter {
               this.log.error("Command <" + command + "> not supported");
             }
           }
-          setTimeout(async () => {
+          this.updateTimeout = this.setTimeout(async () => {
             this.log.debug("updateChargerConnectorInfoData for connector " + connectorNum);
             this.chargerController.fetchConnectorMeasurementData(connectorNum, this.updateChargerConnectorMeasurementObjects.bind(this));
           }, 1e3);
@@ -161,6 +162,9 @@ class SonnenCharger extends utils.Adapter {
       this.setState("info.connection", false, true);
       if (this.updateInterval) {
         this.clearInterval(this.updateInterval);
+      }
+      if (this.updateTimeout) {
+        this.clearTimeout(this.updateTimeout);
       }
       callback();
     } catch (e) {

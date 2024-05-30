@@ -12,6 +12,7 @@ class SonnenCharger extends utils.Adapter {
 
 	private chargerController : ChargerController;
 	private updateInterval: ioBroker.Interval | undefined;
+	private updateTimeout: ioBroker.Timeout | undefined;
 	private infoData : ChargerInfoData | undefined;
 
 	public constructor(options: Partial<utils.AdapterOptions> = {}) {
@@ -151,7 +152,7 @@ class SonnenCharger extends utils.Adapter {
 						}
 					}
 
-					setTimeout(async () => {
+					this.updateTimeout = this.setTimeout(async () => {
 						this.log.debug("updateChargerConnectorInfoData for connector "+connectorNum);
 						this.chargerController.fetchConnectorMeasurementData(connectorNum, this.updateChargerConnectorMeasurementObjects.bind(this));
 					}, 1000);
@@ -170,6 +171,10 @@ class SonnenCharger extends utils.Adapter {
 
 			if (this.updateInterval){
 				this.clearInterval(this.updateInterval);
+			}
+
+			if(this.updateTimeout) {
+				this.clearTimeout(this.updateTimeout);
 			}
 
 			callback();
