@@ -103,7 +103,7 @@
       "charger",
       "wallbox"
     ],
-    "license": "MIT",
+    "licenseInformation": "MIT",
     "platform": "Javascript/Node.js",
     "main": "build/main.js",
     "icon": "sonnen-charger.png",
@@ -113,6 +113,7 @@
     "loglevel": "info",
     "mode": "daemon",
     "type": "energy",
+    "tier": 3,
     "compact": true,
     "connectionType": "local",
     "dataSource": "poll",

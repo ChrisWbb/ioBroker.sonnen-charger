@@ -109,6 +109,8 @@ After you have created an instance of the apdater you have to configure several 
 ## Changelog
 
 ### **WORK IN PROGRESS**
+* (ChrisWbb) update dependancy versions
+* (ChrisWbb) fix finding of adapter checker
 * (ChrisWbb) adjust state roles
 * (ChrisWbb) new version of @types/node
 * (ChrisWbb) tests for node 20.x
@@ -136,7 +138,7 @@ After you have created an instance of the apdater you have to configure several 
 ## License
 MIT License
 
-Copyright (c) 2023 ChrisWbb <development@chrweber.de>
+Copyright (c) 2024 ChrisWbb <development@chrweber.de>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
