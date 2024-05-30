@@ -7,5 +7,5 @@
     "interval": "Anforderungsintervall",
     "interval_help": "Intervall zum Abrufen von Daten (Sekunden)",
     "allowWriteAccess": "Erlaube Schreibzugriff auf sonnenCharger",
-    "allowWriteAccess_help": "EXPERIMENTELL bitte vorsichtig mit dieser Funktion umgehen um Daten in den sonnenCharger zu schreiben"
+    "allowWriteAccess_help": "EXPERIMENTELL - Bitte vorsichtig mit dieser Funktion umgehen, um Daten in den sonnenCharger zu schreiben"
 }

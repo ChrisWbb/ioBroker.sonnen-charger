@@ -90,18 +90,22 @@ class RegisterConverterUtil {
     const intArray = this.getRegisterData(array, start, length);
     return this.byteArrayToString(this.int16ArrayToByteArray(intArray));
   }
+  // int64 4 Register
   static getRegisterDataAsInt64(array, start) {
     const intArray = this.getRegisterData(array, start, 4);
     return this.byteArrayToNumber(this.int16ArrayToByteArray(intArray));
   }
+  // int32 2 Register
   static getRegisterDataAsInt32(array, start) {
     const intArray = this.getRegisterData(array, start, 2);
     return this.byteArrayToNumber(this.int16ArrayToByteArray(intArray));
   }
+  // int16 1 Register
   static getRegisterDataAsInt16(array, start) {
     const intArray = this.getRegisterData(array, start, 1);
     return intArray[0];
   }
+  // float32 2 Register
   static getRegisterDataAsFloat32(array, start) {
     const intArray = this.getRegisterData(array, start, 2);
     return this.int16ArrayToFloat32(intArray);

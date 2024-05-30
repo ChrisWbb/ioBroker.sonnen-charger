@@ -124,7 +124,6 @@ class SonnenCharger extends utils.Adapter {
 							if (typeof state.val === "number") {
 								this.chargerController.commandSetCurrentSetpoint(connectorNum, state.val);
 							}
-							//this.setState(id,null,true);
 							break;
 						}
 						case "cancelCurrentSetpoint": {
@@ -152,10 +151,10 @@ class SonnenCharger extends utils.Adapter {
 						}
 					}
 
-					//					setTimeout(async () => {
-					//						this.log.debug("updateChargerConnectorInfoData for connector "+connectorNum);
-					//						this.chargerController.fetchConnectorMeasurementData(connectorNum, this.updateChargerConnectorMeasurementObjects.bind(this));
-					//					  }, 5000);
+					setTimeout(async () => {
+						this.log.debug("updateChargerConnectorInfoData for connector "+connectorNum);
+						this.chargerController.fetchConnectorMeasurementData(connectorNum, this.updateChargerConnectorMeasurementObjects.bind(this));
+					}, 1000);
 				}
 			}
 		}
@@ -691,7 +690,12 @@ class SonnenCharger extends utils.Adapter {
 		this.setState("measurements."+num+".evMaxPower", data.getEvMaxPower(), true);
 		this.setState("measurements."+num+".evPlannedEnergy", data.getEvPlannedEnergy(), true);
 
-		//this.setState("commands.connectors."+num+".setCurrentSetpoint", data.getTargetCurrentFromPowerMgm(), true);
+		// Update command values
+		this.getState("commands.connectors."+num+".setCurrentSetpoint", (err, state) => {
+			if (state != null && state.val == data.getTargetCurrentFromPowerMgm()) {
+				this.setState("commands.connectors."+num+".setCurrentSetpoint", data.getTargetCurrentFromPowerMgm(), true);
+			}
+		} );
 
 	}
 

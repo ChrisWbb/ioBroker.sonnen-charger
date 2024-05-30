@@ -22,13 +22,12 @@ __export(ChargerInfoData_exports, {
 });
 module.exports = __toCommonJS(ChargerInfoData_exports);
 class ChargerInfoData {
-  constructor() {
-    this.serialNumber = "";
-    this.model = "";
-    this.hardwareVersion = "";
-    this.softwareVersion = "";
-    this.numberOfConnectors = -1;
-  }
+  serialNumber = "";
+  model = "";
+  hardwareVersion = "";
+  softwareVersion = "";
+  numberOfConnectors = -1;
+  /* setter */
   setSerialNumber(serialNumber) {
     this.serialNumber = serialNumber;
   }
@@ -44,6 +43,7 @@ class ChargerInfoData {
   setNumberOfConnectors(numberOfConnectors) {
     this.numberOfConnectors = numberOfConnectors;
   }
+  /* getter */
   getSerialNumber() {
     return this.serialNumber;
   }

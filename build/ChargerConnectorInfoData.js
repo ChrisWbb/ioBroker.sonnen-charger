@@ -22,14 +22,12 @@ __export(ChargerConnectorInfoData_exports, {
 });
 module.exports = __toCommonJS(ChargerConnectorInfoData_exports);
 class ChargerConnectorInfoData {
-  constructor() {
-    this.connectorType = -1;
-    this.numberOfPhases = -1;
-    this.l1ConnectedToPhase = -1;
-    this.l2ConnectedToPhase = -1;
-    this.l3ConnectedToPhase = -1;
-    this.customMaxCurrent = -1;
-  }
+  connectorType = -1;
+  numberOfPhases = -1;
+  l1ConnectedToPhase = -1;
+  l2ConnectedToPhase = -1;
+  l3ConnectedToPhase = -1;
+  customMaxCurrent = -1;
   decodeConnectorType(value) {
     switch (value) {
       case 1:
@@ -39,6 +37,7 @@ class ChargerConnectorInfoData {
     }
     return "";
   }
+  /* setter */
   setConnectorType(connectorType) {
     this.connectorType = connectorType;
   }
@@ -57,6 +56,7 @@ class ChargerConnectorInfoData {
   setCustomMaxCurrent(customMaxCurrent) {
     this.customMaxCurrent = customMaxCurrent;
   }
+  /* getter */
   getConnectorType() {
     return this.connectorType;
   }

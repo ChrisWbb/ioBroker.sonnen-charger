@@ -23,7 +23,7 @@
 		},
 		"interval": {
 			"type": "number",
-			"min": 30,
+			"min": 5,
 			"max": 3600,
 			"sm": 12,
 			"md": 6,

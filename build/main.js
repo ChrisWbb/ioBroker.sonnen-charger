@@ -14,12 +14,19 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
 var utils = __toESM(require("@iobroker/adapter-core"));
 var import_ChargerController = require("./ChargerController");
 class SonnenCharger extends utils.Adapter {
+  chargerController;
+  updateInterval;
+  infoData;
   constructor(options = {}) {
     super({
       ...options,
@@ -30,6 +37,9 @@ class SonnenCharger extends utils.Adapter {
     this.on("stateChange", this.onStateChange.bind(this));
     this.on("unload", this.onUnload.bind(this));
   }
+  /**
+   * Is called when databases are connected and adapter received configuration.
+   */
   async onReady() {
     this.setState("info.connection", true, true);
     if (!this.config.serverIp) {
@@ -135,10 +145,17 @@ class SonnenCharger extends utils.Adapter {
               this.log.error("Command <" + command + "> not supported");
             }
           }
+          setTimeout(async () => {
+            this.log.debug("updateChargerConnectorInfoData for connector " + connectorNum);
+            this.chargerController.fetchConnectorMeasurementData(connectorNum, this.updateChargerConnectorMeasurementObjects.bind(this));
+          }, 1e3);
         }
       }
     }
   }
+  /**
+   * Is called when adapter shuts down - callback has to be called under any circumstances!
+   */
   onUnload(callback) {
     try {
       this.setState("info.connection", false, true);
@@ -605,6 +622,11 @@ class SonnenCharger extends utils.Adapter {
     this.setState("measurements." + num + ".runningSessionID", data.getRunningSessionID(), true);
     this.setState("measurements." + num + ".evMaxPower", data.getEvMaxPower(), true);
     this.setState("measurements." + num + ".evPlannedEnergy", data.getEvPlannedEnergy(), true);
+    this.getState("commands.connectors." + num + ".setCurrentSetpoint", (err, state) => {
+      if (state != null && state.val == data.getTargetCurrentFromPowerMgm()) {
+        this.setState("commands.connectors." + num + ".setCurrentSetpoint", data.getTargetCurrentFromPowerMgm(), true);
+      }
+    });
   }
   async createChargerCommandObjects() {
     this.log.debug("createChargerCommandObjects");

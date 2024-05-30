@@ -22,30 +22,28 @@ __export(ChargerConnectorMeasurementData_exports, {
 });
 module.exports = __toCommonJS(ChargerConnectorMeasurementData_exports);
 class ChargerConnectorMeasurementData {
-  constructor() {
-    this.connectorStatus = -1;
-    this.measuredVehicleNumberOfPhases = -1;
-    this.evMaxPhaseCurrent = -1;
-    this.targetCurrentFromPowerMgm = -1;
-    this.frequency = -1;
-    this.voltageL1 = -1;
-    this.voltageL2 = -1;
-    this.voltageL3 = -1;
-    this.currentL1 = -1;
-    this.currentL2 = -1;
-    this.currentL3 = -1;
-    this.activePowerL1 = -1;
-    this.activePowerL2 = -1;
-    this.activePowerL3 = -1;
-    this.activePowerTotal = -1;
-    this.powerFactor = -1;
-    this.totalImportedActiveEnergyInRunningSession = -1;
-    this.runningSessionDuration = -1;
-    this.runningSessionDepartureTime = -1;
-    this.runningSessionID = -1;
-    this.evMaxPower = -1;
-    this.evPlannedEnergy = -1;
-  }
+  connectorStatus = -1;
+  measuredVehicleNumberOfPhases = -1;
+  evMaxPhaseCurrent = -1;
+  targetCurrentFromPowerMgm = -1;
+  frequency = -1;
+  voltageL1 = -1;
+  voltageL2 = -1;
+  voltageL3 = -1;
+  currentL1 = -1;
+  currentL2 = -1;
+  currentL3 = -1;
+  activePowerL1 = -1;
+  activePowerL2 = -1;
+  activePowerL3 = -1;
+  activePowerTotal = -1;
+  powerFactor = -1;
+  totalImportedActiveEnergyInRunningSession = -1;
+  runningSessionDuration = -1;
+  runningSessionDepartureTime = -1;
+  runningSessionID = -1;
+  evMaxPower = -1;
+  evPlannedEnergy = -1;
   decodeConnectorStatus(value) {
     switch (value) {
       case 0:
@@ -90,6 +88,7 @@ class ChargerConnectorMeasurementData {
     }
     return "";
   }
+  /* setter */
   setConnectorStatus(connectorStatus) {
     this.connectorStatus = connectorStatus;
   }
@@ -156,6 +155,7 @@ class ChargerConnectorMeasurementData {
   setEvPlannedEnergy(evPlannedEnergy) {
     this.evPlannedEnergy = evPlannedEnergy;
   }
+  /* getter */
   getConnectorStatus() {
     return this.connectorStatus;
   }

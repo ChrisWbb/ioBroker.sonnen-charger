@@ -28,6 +28,8 @@ var import_ChargerConnectorInfoData = require("./ChargerConnectorInfoData");
 var import_ChargerConnectorMeasurementData = require("./ChargerConnectorMeasurementData");
 var import_RegisterConverterUtil = require("./RegisterConverterUtil");
 class ChargerController {
+  socket;
+  client;
   constructor() {
     this.socket = new import_net.Socket();
     this.client = new import_jsmodbus.ModbusTCPClient(this.socket);
@@ -119,6 +121,7 @@ class ChargerController {
   }
   async commandSetPowerSetpoint(connectorNum, value) {
     const int16Array = import_RegisterConverterUtil.RegisterConverterUtil.float32ToInt16Array(value);
+    console.info(int16Array);
     this.client.writeMultipleRegisters(11 + (connectorNum - 1) * 100, int16Array);
   }
   async commandCancelPowerSetpoint(connectorNum) {
