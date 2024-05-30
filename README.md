@@ -107,14 +107,12 @@ After you have created an instance of the apdater you have to configure several 
 |cancelPowerSetpoint|Cancel power setpoint|button||W||
 
 ## Changelog
-
-### **WORK IN PROGRESS**
+### 1.2.0 (2024-05-30)
 * (ChrisWbb) update dependancy versions
 * (ChrisWbb) fix finding of adapter checker
 * (ChrisWbb) adjust state roles
 * (ChrisWbb) new version of @types/node
 * (ChrisWbb) tests for node 20.x
-
 
 ### 1.1.1 (2023-03-30)
 * (ChrisWbb) fixed release problem

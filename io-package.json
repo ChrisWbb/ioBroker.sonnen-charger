@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sonnen-charger",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "news": {
+      "1.2.0": {
+        "en": "update dependancy versions\nfix finding of adapter checker\nadjust state roles\nnew version of @types/node\ntests for node 20.x",
+        "de": "aktualisierung der abhängigen versionen\nfixieren des adapter-checkers\nstatusrollen anpassen\nneue version von @types/node\ntests für knoten 20.x",
+        "ru": "обновления зависимых версий\nпоиск адаптера\nизменение ролей\nновая версия @types/node\nтесты для узла 20.x",
+        "pt": "atualizar versões de dependência\ncorreção de encontrar do verificador do adaptador\najustar funções estaduais\nnova versão de @types/node\ntestes para o nó 20.x",
+        "nl": "afhankelijke versies bijwerken\nfix vinden van adapter controleer\nstatusfuncties aanpassen\nnieuwe versie van @types/node\ntests voor knooppunt 20.x",
+        "fr": "mettre à jour les versions de dépendance\nfixer la recherche de l'adaptateur checker\najuster les rôles d'état\nnouvelle version de @types/node\ntests pour le noeud 20.x",
+        "it": "aggiornare le versioni di dipendenza\ncorrezione del rilevamento dell'adattatore checker\nregolare ruoli di stato\nnuova versione di @types/node\ntest per nodo 20.x",
+        "es": "actualización de las versiones de dependencia\nsolución de comprobación de adaptador\najuste de las funciones estatales\nnueva versión de @types/node\npruebas para nodo 20.x",
+        "pl": "aktualizacja wersji zależności\nnaprawić znalezienie kontrolera adaptera\ndostosować role stanu\nnowa wersja @ types / node\ntesty dla węzła 20.x",
+        "uk": "оновлення параметрів залежності\nвиправлено пошук адаптера\nрегулювання ролі держави\nнова версія @types/node\nтести для вузла 20.x",
+        "zh-cn": "更新依赖性版本\n适配器检查器的固定查找\n调整国家角色\n新版本的 @ types/ node\n20x节点测试"
+      },
       "1.1.1": {
         "en": "fixed release problem",
         "de": "problem der veröffentlichung",
