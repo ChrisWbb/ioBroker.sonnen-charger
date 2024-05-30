@@ -108,7 +108,7 @@ After you have created an instance of the apdater you have to configure several 
 
 ## Changelog
 
-## **WORK IN PROGRESS**
+### **WORK IN PROGRESS**
 * (ChrisWbb) fix findings of adapter checker
 
 ### 1.2.0 (2024-05-30)
