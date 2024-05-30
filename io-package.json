@@ -103,7 +103,11 @@
       "charger",
       "wallbox"
     ],
-    "licenseInformation": "MIT",
+    "licenseInformation": {
+      "license": "MIT",
+      "type": "free",
+      "link": "https://github.com/ioBroker/ioBroker.hm-rpc/blob/master/LICENSE"
+    },
     "platform": "Javascript/Node.js",
     "main": "build/main.js",
     "icon": "sonnen-charger.png",
