@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sonnen-charger",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "news": {
+      "1.2.1": {
+        "en": "fix findings of adapter checker",
+        "de": "fixe ergebnisse des adapter-checkers",
+        "ru": "фиксация результатов проверки адаптера",
+        "pt": "corrigir os resultados do verificador do adaptador",
+        "nl": "fix bevindingen van adapter controleer",
+        "fr": "fixer les résultats du vérificateur d'adaptateur",
+        "it": "correggere i risultati dell'adattatore checker",
+        "es": "solucionar los hallazgos del adaptador",
+        "pl": "ustawienie wyników sprawdzania adaptera",
+        "uk": "виправити результати перевірки адаптера",
+        "zh-cn": "适配器检查器的固定结果"
+      },
       "1.2.0": {
         "en": "update dependancy versions\nfix finding of adapter checker\nadjust state roles\nnew version of @types/node\ntests for node 20.x",
         "de": "aktualisierung der abhängigen versionen\nfixieren des adapter-checkers\nstatusrollen anpassen\nneue version von @types/node\ntests für knoten 20.x",
