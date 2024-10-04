@@ -28,6 +28,7 @@ After you have created an instance of the apdater you have to configure several 
 |Allow write access to sonnenCharger|**EXPERIMENTAL** be carefull when writing data into sonnenCharger|false|
 
 
+
 ## Usage
 
 ### Channel: info
@@ -109,6 +110,7 @@ After you have created an instance of the apdater you have to configure several 
 ## Changelog
 
 ## **WORK IN PROGRESS**
+* (ChrisWbb) smart mode implementation
 * (ChrisWbb) update dependancy versions
 
 ### 1.2.1 (2024-05-30)

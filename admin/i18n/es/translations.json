@@ -10,5 +10,17 @@
     "interval": "Intervalo de solicitud",
     "interval_help": "Intervalo para obtener datos (segundos)",
     "allowWriteAccess": "Permitir acceso de escritura a sonnenCharger",
-    "allowWriteAccess_help": "EXPERIMENTAL tenga cuidado al escribir datos en sonnenCharger"
+    "allowWriteAccess_help": "EXPERIMENTAL tenga cuidado al escribir datos en sonnenCharger",
+    "activateChargerControl": "Activación del Modo Inteligente",
+    "activateChargerControl_help": "Control de carga por ioBroker activo",
+    "id_production": "Producción de identificación (W)",
+    "id_production_help": "ID del objeto con la producción de electricidad en vatios.",
+    "id_total_consumption": "ID Consumo total (W)",
+    "id_total_consumption_help": "ID del objeto con el consumo total en vatios",
+    "id_battery_soc": "Nivel de carga de la batería",
+    "id_battery_soc_help": "ID del objeto con el nivel de carga de la batería (0 - 100)",
+    "id_battery_em_soc": "ID reserva de energía de emergencia de la batería",
+    "id_battery_em_soc_help": "ID del objeto con la reserva de energía de emergencia configurada de la batería (0 - 100)",
+    "disableDepartureTime": "Desactivar la hora de salida",
+    "disableDepartureTime_help": "evita la carga completa en un momento determinado"
 }

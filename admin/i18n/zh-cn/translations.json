@@ -10,5 +10,17 @@
     "interval": "请求间隔",
     "interval_help": "获取数据的时间间隔（秒）",
     "allowWriteAccess": "允许对 sonnenCharger 进行写访问",
-    "allowWriteAccess_help": "将数据写入 sonnenCharger 时要小心"
+    "allowWriteAccess_help": "将数据写入 sonnenCharger 时要小心",
+    "activateChargerControl": "激活智能模式",
+    "activateChargerControl_help": "ioBroker主动充电控制",
+    "id_production": "ID 产量 (W)",
+    "id_production_help": "发电量（以瓦为单位）的对象 ID",
+    "id_total_consumption": "ID 总功耗（W）",
+    "id_total_consumption_help": "对象的 ID 以及总消耗量（以瓦特为单位）",
+    "id_battery_soc": "ID 电池电量",
+    "id_battery_soc_help": "具有电池电量的对象 ID (0 - 100)",
+    "id_battery_em_soc": "ID电池应急备用电源",
+    "id_battery_em_soc_help": "已配置电池应急电量的对象 ID (0 - 100)",
+    "disableDepartureTime": "停用出发时间",
+    "disableDepartureTime_help": "防止在特定时间充满电"
 }

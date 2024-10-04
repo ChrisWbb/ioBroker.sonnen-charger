@@ -7,5 +7,18 @@
 	"interval": "Request interval",
 	"interval_help": "Interval for fetching data (seconds)",
 	"allowWriteAccess": "Allow write access to sonnenCharger",
-	"allowWriteAccess_help": "EXPERIMENTAL be carefull when writing data into sonnenCharger"
+	"allowWriteAccess_help": "EXPERIMENTAL be carefull when writing data into sonnenCharger",
+
+	"activateChargerControl": "Activation of Smart Mode",
+    "activateChargerControl_help": "Charging control by ioBroker active",
+    "id_production": "ID Production (W)",
+    "id_production_help": "ID of the object with the electricity production in watts",
+    "id_total_consumption": "ID Total consumption (W)",
+    "id_total_consumption_help": "ID of the object with the total consumption in watts",
+    "id_battery_soc": "ID Battery charge level",
+    "id_battery_soc_help": "ID of the object with the battery charge level (0 - 100)",
+    "id_battery_em_soc": "ID emergency power reserve of the battery",
+    "id_battery_em_soc_help": "ID of the object with the configured emergency power reserve of the battery (0 - 100)",
+    "disableDepartureTime": "Deactivating the departure time",
+    "disableDepartureTime_help": "prevents full charging at a certain time"
 }

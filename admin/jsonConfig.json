@@ -47,19 +47,18 @@
 				}
 			}
 		},
-		"test" : {
+		"smartMode" : {
 			"type": "panel",
-			"disabled": "true",
-			"hidden": "true",
-			"label": "Test",
+			"hidden": "false",
+			"label": "Smart Mode",
 			"items": {
-				"activateChargerManagementByIoBroker": {
+				"activateChargerControl": {
 					"type": "checkbox",
 					"sm": 12,
 					"md": 6,
 					"lg": 6,
-					"label": "activateChargerManagementByIoBroker",
-					"help": "dactivateChargerManagementByIoBroker_help",
+					"label": "activateChargerControl",
+					"help": "activateChargerControl_help",
 					"newLine": true
 				},
 				"id_production": {
@@ -68,7 +67,8 @@
 					"md": 6,
 					"lg": 6,
 					"label": "id_production",
-					"help": "id_production_help"
+					"help": "id_production_help",
+					"newLine": true
 				},
 				"id_total_consumption": {
 					"type": "text",
@@ -76,15 +76,8 @@
 					"md": 6,
 					"lg": 6,
 					"label": "id_total_consumption",
-					"help": "id_total_consumption_help"
-				},
-				"id_charger_consumption": {
-					"type": "text",
-					"sm": 12,
-					"md": 6,
-					"lg": 6,
-					"label": "id_charger_consumption",
-					"help": "id_charger_consumption_help"
+					"help": "id_total_consumption_help",
+					"newLine": true
 				},
 				"id_battery_soc": {
 					"type": "text",
@@ -92,7 +85,17 @@
 					"md": 6,
 					"lg": 6,
 					"label": "id_battery_soc",
-					"help": "id_battery_soc_help"
+					"help": "id_battery_soc_help",
+					"newLine": true
+				},
+				"id_battery_em_soc": {
+					"type": "text",
+					"sm": 12,
+					"md": 6,
+					"lg": 6,
+					"label": "id_battery_em_soc",
+					"help": "id_battery_em_soc_help",
+					"newLine": true
 				},
 				"disableDepartureTime": {
 					"type": "checkbox",

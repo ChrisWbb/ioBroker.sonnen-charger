@@ -7,5 +7,17 @@
     "interval": "Anforderungsintervall",
     "interval_help": "Intervall zum Abrufen von Daten (Sekunden)",
     "allowWriteAccess": "Erlaube Schreibzugriff auf sonnenCharger",
-    "allowWriteAccess_help": "EXPERIMENTELL - Bitte vorsichtig mit dieser Funktion umgehen, um Daten in den sonnenCharger zu schreiben"
+    "allowWriteAccess_help": "EXPERIMENTELL - Bitte vorsichtig mit dieser Funktion umgehen, um Daten in den sonnenCharger zu schreiben",
+    "activateChargerControl": "Aktivierung des Smart-Mode ",
+    "activateChargerControl_help": "Ladesteuerung durch ioBroker aktiv",
+    "id_production": "ID Produktion (W)",
+    "id_production_help": "ID des Objekts mit der Stromproduktion in Watt",
+    "id_total_consumption": "ID Gesamtverbrauch (W)",
+    "id_total_consumption_help": "ID des Objekts mit dem Gesamtverbrauch in Watt",
+    "id_battery_soc": "ID Ladezustand der Batterie",
+    "id_battery_soc_help": "ID des Objekts mit dem Ladezustand der Batterie (0 - 100)",
+    "id_battery_em_soc": "ID Notstromreserve der Batterie",
+    "id_battery_em_soc_help": "ID des Objekts mit der konfigurierten Notstromreserve der Batterie (0 - 100)",
+    "disableDepartureTime": "Deaktivieren der Abfahrzeit",
+    "disableDepartureTime_help": "verhindert das Vollladen zu einer bestimmten Uhrzeit"
 }

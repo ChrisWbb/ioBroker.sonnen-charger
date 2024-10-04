@@ -8,6 +8,14 @@ import { ChargerInfoData } from "./ChargerInfoData";
 import { ChargerConnectorInfoData} from "./ChargerConnectorInfoData";
 import { ChargerConnectorMeasurementData } from "./ChargerConnectorMeasurementData"
 
+enum chargingMode {
+	MAX_POWER = "MAX",
+	PV_ONLY = "PV",
+	PV_ONLY_OPT = "PV +",
+	PV_BATT = "PV & Batterie",
+	PV_BATT_LIMIT =" PV & Batterie Limit"
+};
+
 class SonnenCharger extends utils.Adapter {
 
 	private chargerController : ChargerController;
@@ -54,6 +62,33 @@ class SonnenCharger extends utils.Adapter {
 		this.log.info("config serverPort: " + this.config.serverPort);
 		this.log.info("config interval: " + this.config.interval);
 		this.log.info("config allowWriteAccess: " + this.config.allowWriteAccess);
+
+		this.log.info("config activateChargerControl: " + this.config.activateChargerControl);
+
+		if (this.config.activateChargerControl) {
+
+			if (!this.config.id_production) {
+				this.log.error("smart mode is activated and id_production is empty - please check instance configuration")
+				return;
+			}
+			if (!this.config.id_total_consumption) {
+				this.log.error("smart mode is activated and id_total_consumption is empty - please check instance configuration")
+				return;
+			}
+			if (!this.config.id_battery_soc) {
+				this.log.error("smart mode is activated and id_battery_soc is empty - please check instance configuration")
+				return;
+			}
+			if (!this.config.id_battery_em_soc) {
+				this.log.error("smart mode is activated and id_battery_em_soc is empty - please check instance configuration")
+				return;
+			}
+
+			this.log.info("config id_production: " + this.config.id_production);
+			this.log.info("config id_total_consumption: " + this.config.id_total_consumption);
+			this.log.info("config id_battery_soc: " + this.config.id_battery_soc);
+			this.log.info("config id_battery_em_soc: " + this.config.id_battery_em_soc);
+		}
 
 		this.chargerController.connect( this.config.serverIp, this.config.serverPort, this.actionsAfterConnect.bind(this));
 	}
@@ -104,12 +139,14 @@ class SonnenCharger extends utils.Adapter {
 							this.log.debug("stopCharging");
 							this.chargerController.commandStopCharging(connectorNum);
 							this.setState(id,false,true);
+							this.setState("commands.connectors."+connectorNum+".setCurrentSetpoint", 0, true);
 							break;
 						}
 						case "pauseCharging": {
 							this.log.debug("pauseCharging");
 							this.chargerController.commandPauseCharging(connectorNum);
 							this.setState(id,false,true);
+							this.setState("commands.connectors."+connectorNum+".setCurrentSetpoint", 0, true);
 							break;
 						}
 						case "setDepartureTime": {
@@ -131,6 +168,7 @@ class SonnenCharger extends utils.Adapter {
 							this.log.debug("cancelCurrentSetpoint");
 							this.chargerController.commandCancelCurrentSetpoint(connectorNum);
 							this.setState(id,false,true);
+							this.setState("commands.connectors."+connectorNum+".setCurrentSetpoint", null, true);
 							break;
 						}
 						case "setPowerSetpoint": {
@@ -201,13 +239,14 @@ class SonnenCharger extends utils.Adapter {
 		if (this.config.allowWriteAccess) {
 
 			this.createChargerCommandObjects();
+			this.createChargerConfigObjects();
 
 			for(let i = 1; i <= this.infoData.getNumberOfConnectors(); i++) {
 				this.createChargerConnectorCommandObjects(i);
 			}
 			this.subscribeStates("commands.*");
 		} else {
-			this.deleteChannelAsync("commands");
+			this.delObject("commands");
 		}
 
 		this.setState("chargerSettings.serialNumber", infoData.getSerialNumber(), true);
@@ -320,6 +359,103 @@ class SonnenCharger extends utils.Adapter {
 			native: {}
 		});
 	}
+
+	private async createChargerConfigObjects(): Promise<void> {
+
+		this.log.debug("createChargerConfigObjects");
+
+		this.setObjectNotExists("config", {
+			type: "channel",
+			common: {
+				name: "configuration for smart mode "
+			},
+			native: {}
+		});
+
+		let stateId = "config.chargerMode";
+
+		if (!await this.getObjectAsync(stateId)) {
+
+			await this.setObjectNotExists(stateId, {
+				type: "state",
+				common: {
+					name: "Charger mode",
+					type: "string",
+					desc: "one of: MAX, PV, PV +, PV & Batterie, PV & Batterie Limit",
+					role: "value",
+					read: true,
+					write: true
+				},
+				native: {}
+			});
+
+			this.setState(stateId, "PV", true);
+		}
+
+		stateId = "config.batteryMaxPower";
+
+		if (!await this.getObjectAsync(stateId)) {
+
+			await this.setObjectNotExists(stateId, {
+				type: "state",
+				common: {
+					name: "Battery Max Power (W)",
+					type: "number",
+					desc: "Max power output of battery (W)",
+					role: "value",
+					read: true,
+					write: true,
+					unit: "W"
+				},
+				native: {}
+			});
+
+			this.setState(stateId, "4000", true);
+		}
+
+		stateId = "config.evMinPower";
+
+		if (!await this.getObjectAsync(stateId)) {
+
+			await this.setObjectNotExists(stateId, {
+				type: "state",
+				common: {
+					name: "EV min power",
+					type: "number",
+					desc: "Min Charger Power for electric vehicle (W)",
+					role: "value",
+					read: true,
+					write: true,
+					unit: "W"
+				},
+				native: {}
+			});
+
+			this.setState(stateId, "3800", true);
+		}
+
+		stateId = "config.batteryMinSoC";
+
+		if (!await this.getObjectAsync(stateId)) {
+
+			await this.setObjectNotExists(stateId, {
+				type: "state",
+				common: {
+					name: "Battery min state of charge (0 - 100)",
+					type: "number",
+					desc: "Min state of charge while charging",
+					role: "value",
+					read: true,
+					write: true,
+					unit: "W"
+				},
+				native: {}
+			});
+
+			this.setState(stateId, "60", true);
+		}
+	}
+
 
 	private async updateChargerConnectorInfoData(num : number, data : ChargerConnectorInfoData): Promise<void> {
 
@@ -702,6 +838,11 @@ class SonnenCharger extends utils.Adapter {
 			}
 		} );
 
+		// Smart Mode
+		if (this.config.activateChargerControl) {
+			this.checkChargerSmartMode();
+		}
+
 	}
 
 	private async createChargerCommandObjects() : Promise<void> {
@@ -853,6 +994,194 @@ class SonnenCharger extends utils.Adapter {
 			},
 			native: {}
 		});
+	}
+
+	private async checkChargerSmartMode (): Promise<void> {
+
+		// PV + Battery + Consumption
+		let production = 0;
+		let consumptionTotal = 0;
+		let batterySoC = 0;
+		let batteryEmSoC = 0;
+		let batteryPowerMinLevel = 0;
+		let batteryMaxPower = 0;
+
+		// Charger
+		let chargerMode;
+		let chargerStatus;
+		let consumptionCharger = 0;
+		let currentTargetFromPowerMgm = 0;
+
+		// Electric vehicle
+		let evMinPower = 0;
+
+		let chargerTargetSetPoint = -1;
+
+		const id_connectorStatus = "measurements.1.connectorStatusLabel"
+		const id_activePowerTotal = "measurements.1.activePowerTotal";
+		const id_targetCurrentFromPowerMgm = "measurements.1.targetCurrentFromPowerMgm";
+
+		const id_chargerMode = "config.chargerMode";
+		const id_batteryMaxPower = "config.batteryMaxPower";
+		const id_batteryMinSoC = "config.batteryMinSoC";
+		const id_evMinPower = "config.evMinPower";
+
+		// IDs of  states to be read
+		const externalIds = [this.config.id_production, this.config.id_total_consumption, this.config.id_battery_soc, this.config.id_battery_em_soc];
+		const internalIds = [id_targetCurrentFromPowerMgm, id_activePowerTotal, id_connectorStatus, id_chargerMode, id_batteryMaxPower, id_batteryMinSoC, id_evMinPower];
+
+		// create promises for all getState-Calls
+		const externalPromises = externalIds.map(id => this.getForeignStateAsync(id).then(state => ({ id, state })));
+		const internalPromises = internalIds.map(id => this.getStateAsync(id).then(state => ({ id, state })));
+		const allPromises = externalPromises.concat(internalPromises);
+
+		// Wait until all promises are closed
+		const results = await Promise.all(allPromises);
+
+		results.forEach(result => {
+			if (result.state) {
+
+				// current production (W)
+				if (this.config.id_production === result.id) {
+					production = result.state.val as number;
+				}
+				// current consumption incl. charger (W)
+				if (this.config.id_total_consumption === result.id) {
+					consumptionTotal = result.state.val as number;
+				}
+				// current battery state of charge (0 - 100)
+				if (this.config.id_battery_soc === result.id) {
+					batterySoC = result.state.val as number;
+				}
+				// min battery state of charge for power blackout (0 - 20)
+				if (this.config.id_battery_em_soc === result.id) {
+					batteryEmSoC = result.state.val as number;
+				}
+				// current charger consumption(W)
+				if (id_activePowerTotal === result.id) {
+					consumptionCharger = (result.state.val as number) * 1000;
+				}
+				// Charger status (e.g. WaitingForVehicleToBeConnected, WaitingForVehicleToStart, Charging, ChargingPausedByEv, ChargingPausedByEvse, ChargingEnded, ChargingFault)
+				if (id_connectorStatus === result.id) {
+					chargerStatus = result.state.val as string;
+				}
+				// Charger current setPoint (set by this adapter before)
+				if (id_targetCurrentFromPowerMgm === result.id) {
+					currentTargetFromPowerMgm = result.state.val as number;
+				}
+				// Charging mode (MAX, PV, PV +, PV & Batterie, PV & Batterie Limit)
+				if (id_chargerMode === result.id) {
+					chargerMode = result.state.val as string;
+				}
+				//
+				if (id_batteryMinSoC === result.id) {
+					batteryPowerMinLevel = result.state.val as number;
+				}
+				//
+				if (id_evMinPower === result.id) {
+					evMinPower = result.state.val as number;
+				}
+				// max power output of battery (W)
+				if (id_batteryMaxPower === result.id) {
+					batteryMaxPower = result.state.val as number;
+				}
+
+				this.log.debug("id: "+result.id+" value: "+result.state.val);
+			}
+		});
+
+		if (chargerStatus === "Charging" || chargerStatus === "ChargingPausedByEvse" ) {
+
+			// MAX POWER
+			if (chargerMode == chargingMode.MAX_POWER) {
+
+				chargerTargetSetPoint = 16;
+
+			} else {
+
+				let availablePower = 0;
+
+				// PV_ONLY
+				if (chargerMode == chargingMode.PV_ONLY) {
+
+					availablePower =  production - consumptionTotal + consumptionCharger;
+
+				// PV_ONLY_OPT
+				} else if (chargerMode == chargingMode.PV_ONLY_OPT) {
+
+					availablePower =  production - consumptionTotal + consumptionCharger;
+
+					if (availablePower <= evMinPower && batterySoC > batteryPowerMinLevel) {
+						availablePower = evMinPower;
+					}
+
+				// PV_BATT
+				} else if (chargerMode == chargingMode.PV_BATT) {
+
+					if (batterySoC > batteryEmSoC) {
+						availablePower =  production - consumptionTotal + consumptionCharger + batteryMaxPower;
+					}
+
+				// PV_BATT_LIMIT
+				} else if (chargerMode == chargingMode.PV_BATT_LIMIT) {
+
+					if (batterySoC > batteryEmSoC && batterySoC > batteryPowerMinLevel) {
+						availablePower =  production - consumptionTotal + consumptionCharger + batteryMaxPower;
+					}
+
+				} else {
+
+					this.log.error("Unkown charging mode: "+chargerMode);
+				}
+
+
+				this.log.debug("availablePower: "+availablePower);
+				chargerTargetSetPoint = this.calculateNewSetPoint(availablePower);
+
+			}
+
+			this.log.debug("chargerTargetSetPoint: "+chargerTargetSetPoint);
+
+			//adjust setPoint
+			if (chargerTargetSetPoint >= 0 && chargerTargetSetPoint != currentTargetFromPowerMgm) {
+
+				if (chargerTargetSetPoint == 0) {
+					console.log("Adjustment setPoint: pauseCharging");
+					// this.setState("commands.connectors.1.pauseCharging", true, false);
+				} else {
+					console.log("Adjustment setPoint: " + currentTargetFromPowerMgm + " --> " + chargerTargetSetPoint);
+					//this.setState("commands.connectors.1.setCurrentSetpoint", chargerTargetSetPoint, false);
+				}
+			}
+		}
+	}
+
+	private calculateNewSetPoint(availablePower: number) : number {
+
+		if (availablePower >= 10000)
+			return 16;
+		if (availablePower >= 9600)
+			return 15;
+		if (availablePower >= 8900)
+			return 14;
+		if (availablePower >= 8000)
+			return 13;
+		if (availablePower >= 7700)
+			return 12;
+		if (availablePower >= 6900)
+			return 11;
+		if (availablePower >= 6100)
+			return 10;
+		if (availablePower >= 5700)
+			return 9;
+		if (availablePower >= 4900)
+			return 8;
+		if (availablePower >= 4000)
+			return 7;
+		if (availablePower >= 3800)
+			return 6;
+
+		return 0;
 	}
 
 }

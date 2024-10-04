@@ -8,6 +8,12 @@ declare global {
 			serverPort: number;
 			interval: number;
 			allowWriteAccess: boolean;
+			activateChargerControl: boolean;
+			id_production: string;
+			id_total_consumption: string;
+			id_battery_soc: string;
+			id_battery_em_soc: string;
+			disableDepartureTime: boolean;
 		}
 	}
 }

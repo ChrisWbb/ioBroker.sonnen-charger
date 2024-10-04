@@ -121,6 +121,7 @@ class ChargerController {
 		const int16Array : number[] = RegisterConverterUtil.int64ToInt16Array(value);
 		this.client.writeMultipleRegisters(4 + (connectorNum-1) * 100, int16Array);
 	}
+
 	public async commandSetCurrentSetpoint(connectorNum : number, value : number) : Promise<void> {
 		const int16Array : number[] = RegisterConverterUtil.float32ToInt16Array(value);
 		this.client.writeMultipleRegisters(8 + (connectorNum-1) * 100, int16Array);

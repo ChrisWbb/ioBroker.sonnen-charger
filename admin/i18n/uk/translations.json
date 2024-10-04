@@ -9,5 +9,17 @@
     "interval": "Інтервал запиту",
     "interval_help": "Інтервал отримання даних (секунди)",
     "allowWriteAccess": "Дозволити доступ для запису до sonnenCharger",
-    "allowWriteAccess_help": "ЕКСПЕРИМЕНТАЛЬНИЙ Будьте обережні, записуючи дані в sonnenCharger"
+    "allowWriteAccess_help": "ЕКСПЕРИМЕНТАЛЬНИЙ Будьте обережні, записуючи дані в sonnenCharger",
+    "activateChargerControl": "Активація Smart Mode",
+    "activateChargerControl_help": "Контроль зарядки через ioBroker активний",
+    "id_production": "ID виробництва (Вт)",
+    "id_production_help": "ID об'єкта з виробленням електроенергії у ватах",
+    "id_total_consumption": "ID Загальне споживання (Вт)",
+    "id_total_consumption_help": "ID об'єкта із сумарним споживанням у ватах",
+    "id_battery_soc": "ID Рівень заряду акумулятора",
+    "id_battery_soc_help": "ID об'єкта з рівнем заряду акумулятора (0 - 100)",
+    "id_battery_em_soc": "ID аварійного запасу живлення акумулятора",
+    "id_battery_em_soc_help": "ID об'єкта з налаштованим аварійним запасом живлення акумулятора (0 - 100)",
+    "disableDepartureTime": "Дезактивація часу відправлення",
+    "disableDepartureTime_help": "запобігає повній зарядці в певний час"
 }

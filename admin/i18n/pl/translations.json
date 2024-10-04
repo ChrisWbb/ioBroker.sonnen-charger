@@ -10,5 +10,17 @@
     "interval": "Interwał żądań",
     "interval_help": "Interwał pobierania danych (sekundy)",
     "allowWriteAccess": "Zezwól na dostęp do zapisu dla sonnenCharger",
-    "allowWriteAccess_help": "EKSPERYMENTALNE Zachowaj ostrożność podczas zapisywania danych w sonnenCharger"
+    "allowWriteAccess_help": "EKSPERYMENTALNE Zachowaj ostrożność podczas zapisywania danych w sonnenCharger",
+    "activateChargerControl": "Aktywacja trybu inteligentnego",
+    "activateChargerControl_help": "Kontrola ładowania przez ioBroker aktywna",
+    "id_production": "Produkcja ID (W)",
+    "id_production_help": "Identyfikator obiektu z produkcją energii elektrycznej w watach",
+    "id_total_consumption": "ID Całkowite zużycie (W)",
+    "id_total_consumption_help": "Identyfikator obiektu z całkowitym poborem w watach",
+    "id_battery_soc": "Poziom naładowania akumulatora",
+    "id_battery_soc_help": "Identyfikator obiektu wraz ze stopniem naładowania baterii (0 - 100)",
+    "id_battery_em_soc": "Identyfikator awaryjnej rezerwy mocy akumulatora",
+    "id_battery_em_soc_help": "Identyfikator obiektu ze skonfigurowaną rezerwą mocy awaryjnej akumulatora (0 - 100)",
+    "disableDepartureTime": "Dezaktywacja godziny odjazdu",
+    "disableDepartureTime_help": "uniemożliwia pełne naładowanie w określonym czasie"
 }

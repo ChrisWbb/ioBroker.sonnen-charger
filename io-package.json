@@ -138,11 +138,13 @@
     "serverIp": "",
     "serverPort": 502,
     "interval": 60,
+    "allowWriteAccess": false,
+    "activateChargerControl": false,
     "id_production": "sonnen.0.status.production",
     "id_total_consumption": "sonnen.0.status.consumption",
-    "id_charger_consumption": "sonnen-charger.0.measurements.1.activePowerTotal",
     "id_battery_soc": "sonnen.0.status.userSoc",
-    "disableDepartureTime": true
+    "id_battery_em_soc": "sonnen.0.configurations.EM_USOC",
+    "disableDepartureTime": false
   },
   "objects": [],
   "instanceObjects": [
@@ -150,7 +152,19 @@
       "_id": "info",
       "type": "channel",
       "common": {
-        "name": "Information"
+        "name": {
+          "en": "Information",
+          "de": "Informationen",
+          "ru": "Информация",
+          "pt": "Informação",
+          "nl": "Informatie",
+          "fr": "Informations",
+          "it": "Informazioni",
+          "es": "Información",
+          "pl": "Informacje",
+          "uk": "Інформація",
+          "zh-cn": "资料"
+        }
       },
       "native": {}
     },
@@ -205,7 +219,19 @@
       "type": "state",
       "common": {
         "role": "info.serial",
-        "name": "Serial number",
+        "name": {
+          "en": "Serial number",
+          "de": "Seriennummer",
+          "ru": "Серийный номер",
+          "pt": "Número de série",
+          "nl": "Volgnummer",
+          "fr": "Numéro de série",
+          "it": "Numero di serie",
+          "es": "Número de serie",
+          "pl": "Numer seryjny",
+          "uk": "Серійний номер",
+          "zh-cn": "序列号"
+        },
         "type": "string",
         "read": true,
         "write": false
@@ -217,7 +243,19 @@
       "type": "state",
       "common": {
         "role": "value",
-        "name": "Model",
+        "name": {
+          "en": "Model",
+          "de": "Modell",
+          "ru": "Модель",
+          "pt": "Modelo",
+          "nl": "Model",
+          "fr": "Modèle",
+          "it": "Modello",
+          "es": "Modelo",
+          "pl": "Wzór",
+          "uk": "Модель",
+          "zh-cn": "型号"
+        },
         "type": "string",
         "read": true,
         "write": false
@@ -229,7 +267,19 @@
       "type": "state",
       "common": {
         "role": "info.hardware",
-        "name": "Hardware version",
+        "name": {
+          "en": "Hardware version",
+          "de": "Hardware-Version",
+          "ru": "Оборудование",
+          "pt": "Versão de hardware",
+          "nl": "Hardwareversie",
+          "fr": "Version matérielle",
+          "it": "Versione hardware",
+          "es": "Versión de hardware",
+          "pl": "Wersja sprzętowa",
+          "uk": "Версія обладнання",
+          "zh-cn": "硬件版本"
+        },
         "type": "string",
         "read": true,
         "write": false
@@ -241,7 +291,19 @@
       "type": "state",
       "common": {
         "role": "info.firmware",
-        "name": "Software version",
+        "name": {
+          "en": "Software version",
+          "de": "Softwareversion",
+          "ru": "Программная версия",
+          "pt": "Versão de software",
+          "nl": "Softwareversie",
+          "fr": "Version logicielle",
+          "it": "Versione software",
+          "es": "Versión del software",
+          "pl": "Wersja oprogramowania",
+          "uk": "Версія програмного забезпечення",
+          "zh-cn": "软件版本"
+        },
         "type": "string",
         "read": true,
         "write": false
@@ -253,7 +315,19 @@
       "type": "state",
       "common": {
         "role": "value",
-        "name": "Number of connectors",
+        "name": {
+          "en": "Number of connectors",
+          "de": "Anzahl der Steckverbinder",
+          "ru": "Количество разъемов",
+          "pt": "Número de conectores",
+          "nl": "Aantal aansluitingen",
+          "fr": "Nombre de connecteurs",
+          "it": "Numero di connettori",
+          "es": "Número de conectores",
+          "pl": "Liczba połączeń",
+          "uk": "Кількість роз'ємів",
+          "zh-cn": "连接器数"
+        },
         "type": "number",
         "read": true,
         "write": false,
@@ -266,7 +340,19 @@
       "type": "channel",
       "common": {
         "role": "value",
-        "name": "connectors"
+        "name": {
+          "en": "connectors",
+          "de": "Anschlüsse",
+          "ru": "разъемы",
+          "pt": "conectores",
+          "nl": "verbindingsstukken",
+          "fr": "connecteurs",
+          "it": "connettori",
+          "es": "conectores",
+          "pl": "złącza",
+          "uk": "роз'єми",
+          "zh-cn": "连接器"
+        }
       },
       "native": {}
     },
@@ -275,7 +361,19 @@
       "type": "channel",
       "common": {
         "role": "value",
-        "name": "measurements"
+        "name": {
+          "en": "measurements",
+          "de": "Messungen",
+          "ru": "измерения",
+          "pt": "medições",
+          "nl": "metingen",
+          "fr": "mesures",
+          "it": "misure",
+          "es": "mediciones",
+          "pl": "pomiary",
+          "uk": "вимірювання",
+          "zh-cn": "测量"
+        }
       },
       "native": {}
     }
