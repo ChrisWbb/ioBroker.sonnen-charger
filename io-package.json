@@ -163,7 +163,12 @@
   "native": {
     "serverIp": "",
     "serverPort": 502,
-    "interval": 60
+    "interval": 60,
+    "id_production": "sonnen.0.status.production",
+    "id_total_consumption": "sonnen.0.status.consumption",
+    "id_charger_consumption": "sonnen-charger.0.measurements.1.activePowerTotal",
+    "id_battery_soc": "sonnen.0.status.userSoc",
+    "disableDepartureTime": true
   },
   "objects": [],
   "instanceObjects": [

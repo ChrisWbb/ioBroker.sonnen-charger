@@ -1,45 +1,107 @@
 {
 	"i18n": true,
-	"type": "panel",
+	"type": "tabs",
 	"items": {
-		"serverIp": {
-			"type": "text",
-			"sm": 12,
-			"md": 6,
-			"lg": 6,
-			"label": "serverIp",
-			"help": "serverIp_help"
+		"basic": {
+			"type": "panel",
+			"label": "Basic",
+			"items":	{
+				"serverIp": {
+					"type": "text",
+					"sm": 12,
+					"md": 6,
+					"lg": 6,
+					"label": "serverIp",
+					"help": "serverIp_help"
+				},
+				"serverPort": {
+					"type": "number",
+					"min": 1,
+					"max": 65000,
+					"sm": 12,
+					"md": 6,
+					"lg": 6,
+					"label": "serverPort",
+					"help": "serverPort_help",
+					"newLine": true
+				},
+				"interval": {
+					"type": "number",
+					"min": 5,
+					"max": 3600,
+					"sm": 12,
+					"md": 6,
+					"lg": 6,
+					"label": "interval",
+					"help": "interval_help",
+					"newLine": true
+				},
+				"allowWriteAccess": {
+					"type": "checkbox",
+					"sm": 12,
+					"md": 6,
+					"lg": 6,
+					"label": "allowWriteAccess",
+					"help": "allowWriteAccess_help",
+					"newLine": true
+				}
+			}
 		},
-		"serverPort": {
-			"type": "number",
-			"min": 1,
-			"max": 65000,
-			"sm": 12,
-			"md": 6,
-			"lg": 6,
-			"label": "serverPort",
-			"help": "serverPort_help",
-			"newLine": true
-		},
-		"interval": {
-			"type": "number",
-			"min": 5,
-			"max": 3600,
-			"sm": 12,
-			"md": 6,
-			"lg": 6,
-			"label": "interval",
-			"help": "interval_help",
-			"newLine": true
-		},
-		"allowWriteAccess": {
-			"type": "checkbox",
-			"sm": 12,
-			"md": 6,
-			"lg": 6,
-			"label": "allowWriteAccess",
-			"help": "allowWriteAccess_help",
-			"newLine": true
+		"test" : {
+			"type": "panel",
+			"label": "Test",
+			"items": {
+				"activateChargerManagementByIoBroker": {
+					"type": "checkbox",
+					"sm": 12,
+					"md": 6,
+					"lg": 6,
+					"label": "activateChargerManagementByIoBroker",
+					"help": "dactivateChargerManagementByIoBroker_help",
+					"newLine": true
+				},
+				"id_production": {
+					"type": "text",
+					"sm": 12,
+					"md": 6,
+					"lg": 6,
+					"label": "id_production",
+					"help": "id_production_help"
+				},
+				"id_total_consumption": {
+					"type": "text",
+					"sm": 12,
+					"md": 6,
+					"lg": 6,
+					"label": "id_total_consumption",
+					"help": "id_total_consumption_help"
+				},
+				"id_charger_consumption": {
+					"type": "text",
+					"sm": 12,
+					"md": 6,
+					"lg": 6,
+					"label": "id_charger_consumption",
+					"help": "id_charger_consumption_help"
+				},
+				"id_battery_soc": {
+					"type": "text",
+					"sm": 12,
+					"md": 6,
+					"lg": 6,
+					"label": "id_battery_soc",
+					"help": "id_battery_soc_help"
+				},
+				"disableDepartureTime": {
+					"type": "checkbox",
+					"sm": 12,
+					"md": 6,
+					"lg": 6,
+					"label": "disableDepartureTime",
+					"help": "disableDepartureTime_help",
+					"newLine": true
+				}
+			}
 		}
 	}
 }
