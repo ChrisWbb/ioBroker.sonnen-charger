@@ -67,32 +67,6 @@
         "pl": "naprawić wyniki",
         "uk": "виправити ESLint результати",
         "zh-cn": "fixESLint的调查结果"
-      },
-      "1.0.1": {
-        "en": "preparation for release\nsmall fixes from adapter check",
-        "de": "vorbereitung auf die freigabe\nkleine befestigungen von adapter-check",
-        "ru": "подготовка к выпуску\nнебольшие исправления от проверки адаптера",
-        "pt": "preparação para a libertação\npequenas correções da verificação do adaptador",
-        "nl": "voorbereiding voor vrijlating\nkleine reparaties van adapter check",
-        "fr": "préparation à la libération\npetites corrections du contrôle de l'adaptateur",
-        "it": "preparazione per il rilascio\npiccole correzioni dal controllo dell'adattatore",
-        "es": "preparación para la liberación\npequeñas correcciones de la comprobación del adaptador",
-        "pl": "przygotowanie do wydania\nmała ustawa z dopasowania adapterowego",
-        "uk": "підготовка до випуску\nмаленькі кріплення з перевірки адаптера",
-        "zh-cn": "准备释放\n适应人员检查的小配件"
-      },
-      "1.0.0": {
-        "en": "initial release",
-        "de": "Erstveröffentlichung",
-        "ru": "Начальная версия",
-        "pt": "lançamento inicial",
-        "nl": "Eerste uitgave",
-        "fr": "Première version",
-        "it": "Versione iniziale",
-        "es": "Versión inicial",
-        "pl": "Pierwsze wydanie",
-        "zh-cn": "首次出版",
-        "uk": "початковий випуск"
       }
     },
     "titleLang": {
@@ -151,7 +125,7 @@
     },
     "dependencies": [
       {
-        "js-controller": ">=3.3.22"
+        "js-controller": ">=5.0.19"
       }
     ],
     "globalDependencies": [

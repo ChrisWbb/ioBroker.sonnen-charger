@@ -734,7 +734,6 @@ class SonnenCharger extends utils.Adapter {
 			common: {
 				name: "Set time UTC",
 				role: "value",
-				def: false,
 				type: "number",
 				read: false,
 				write: true,
