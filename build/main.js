@@ -69,11 +69,28 @@ class SonnenCharger extends utils.Adapter {
     this.log.info("config interval: " + this.config.interval);
     this.log.info("config allowWriteAccess: " + this.config.allowWriteAccess);
     this.log.info("config activateChargerControl: " + this.config.activateChargerControl);
-    this.log.info("config id_production: " + this.config.id_production);
-    this.log.info("config id_total_consumption: " + this.config.id_total_consumption);
-    this.log.info("config id_charger_consumption: " + this.config.id_charger_consumption);
-    this.log.info("config id_battery_soc: " + this.config.id_battery_soc);
-    this.log.info("config id_battery_em_soc: " + this.config.id_battery_em_soc);
+    if (this.config.activateChargerControl) {
+      if (!this.config.id_production) {
+        this.log.error("smart mode is activated and id_production is empty - please check instance configuration");
+        return;
+      }
+      if (!this.config.id_total_consumption) {
+        this.log.error("smart mode is activated and id_total_consumption is empty - please check instance configuration");
+        return;
+      }
+      if (!this.config.id_battery_soc) {
+        this.log.error("smart mode is activated and id_battery_soc is empty - please check instance configuration");
+        return;
+      }
+      if (!this.config.id_battery_em_soc) {
+        this.log.error("smart mode is activated and id_battery_em_soc is empty - please check instance configuration");
+        return;
+      }
+      this.log.info("config id_production: " + this.config.id_production);
+      this.log.info("config id_total_consumption: " + this.config.id_total_consumption);
+      this.log.info("config id_battery_soc: " + this.config.id_battery_soc);
+      this.log.info("config id_battery_em_soc: " + this.config.id_battery_em_soc);
+    }
     this.chargerController.connect(this.config.serverIp, this.config.serverPort, this.actionsAfterConnect.bind(this));
   }
   onStateChange(id, state) {
@@ -333,7 +350,7 @@ class SonnenCharger extends utils.Adapter {
     }
     stateId = "config.batteryMaxPower";
     if (!await this.getObjectAsync(stateId)) {
-      this.setObjectNotExists(stateId, {
+      await this.setObjectNotExists(stateId, {
         type: "state",
         common: {
           name: "Battery Max Power (W)",
@@ -350,7 +367,7 @@ class SonnenCharger extends utils.Adapter {
     }
     stateId = "config.evMinPower";
     if (!await this.getObjectAsync(stateId)) {
-      this.setObjectNotExists(stateId, {
+      await this.setObjectNotExists(stateId, {
         type: "state",
         common: {
           name: "EV min power",
@@ -367,7 +384,7 @@ class SonnenCharger extends utils.Adapter {
     }
     stateId = "config.batteryMinSoC";
     if (!await this.getObjectAsync(stateId)) {
-      this.setObjectNotExists(stateId, {
+      await this.setObjectNotExists(stateId, {
         type: "state",
         common: {
           name: "Battery min state of charge (0 - 100)",
