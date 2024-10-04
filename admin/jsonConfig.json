@@ -49,6 +49,8 @@
 		},
 		"test" : {
 			"type": "panel",
+			"disabled": "true",
+			"hidden": "true",
 			"label": "Test",
 			"items": {
 				"activateChargerManagementByIoBroker": {
