@@ -8,9 +8,11 @@
 			"items":	{
 				"serverIp": {
 					"type": "text",
+					"xs": 12,
 					"sm": 12,
 					"md": 6,
-					"lg": 6,
+					"lg": 4,
+					"xl": 4,
 					"label": "serverIp",
 					"help": "serverIp_help"
 				},
@@ -18,9 +20,11 @@
 					"type": "number",
 					"min": 1,
 					"max": 65000,
+					"xs": 12,
 					"sm": 12,
 					"md": 6,
-					"lg": 6,
+					"lg": 4,
+					"xl": 4,
 					"label": "serverPort",
 					"help": "serverPort_help",
 					"newLine": true
@@ -29,18 +33,22 @@
 					"type": "number",
 					"min": 5,
 					"max": 3600,
+					"xs": 12,
 					"sm": 12,
 					"md": 6,
-					"lg": 6,
+					"lg": 4,
+					"xl": 4,
 					"label": "interval",
 					"help": "interval_help",
 					"newLine": true
 				},
 				"allowWriteAccess": {
 					"type": "checkbox",
+					"xs": 12,
 					"sm": 12,
 					"md": 6,
-					"lg": 6,
+					"lg": 4,
+					"xl": 4,
 					"label": "allowWriteAccess",
 					"help": "allowWriteAccess_help",
 					"newLine": true
@@ -54,54 +62,66 @@
 			"items": {
 				"activateChargerControl": {
 					"type": "checkbox",
+					"xs": 12,
 					"sm": 12,
 					"md": 6,
-					"lg": 6,
+					"lg": 4,
+					"xl": 4,
 					"label": "activateChargerControl",
 					"help": "activateChargerControl_help",
 					"newLine": true
 				},
 				"id_production": {
 					"type": "text",
+					"xs": 12,
 					"sm": 12,
 					"md": 6,
-					"lg": 6,
+					"lg": 4,
+					"xl": 4,
 					"label": "id_production",
 					"help": "id_production_help",
 					"newLine": true
 				},
 				"id_total_consumption": {
 					"type": "text",
+					"xs": 12,
 					"sm": 12,
 					"md": 6,
-					"lg": 6,
+					"lg": 4,
+					"xl": 4,
 					"label": "id_total_consumption",
 					"help": "id_total_consumption_help",
 					"newLine": true
 				},
 				"id_battery_soc": {
 					"type": "text",
+					"xs": 12,
 					"sm": 12,
 					"md": 6,
-					"lg": 6,
+					"lg": 4,
+					"xl": 4,
 					"label": "id_battery_soc",
 					"help": "id_battery_soc_help",
 					"newLine": true
 				},
 				"id_battery_em_soc": {
 					"type": "text",
+					"xs": 12,
 					"sm": 12,
 					"md": 6,
-					"lg": 6,
+					"lg": 4,
+					"xl": 4,
 					"label": "id_battery_em_soc",
 					"help": "id_battery_em_soc_help",
 					"newLine": true
 				},
 				"disableDepartureTime": {
 					"type": "checkbox",
+					"xs": 12,
 					"sm": 12,
 					"md": 6,
-					"lg": 6,
+					"lg": 4,
+					"xl": 4,
 					"label": "disableDepartureTime",
 					"help": "disableDepartureTime_help",
 					"newLine": true
