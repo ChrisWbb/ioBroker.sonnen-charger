@@ -1,5 +1,5 @@
 import { ModbusTCPClient } from "jsmodbus"
-import { Socket, SocketConnectOpts } from "net"
+import { Socket, SocketConnectOpts } from "node:net"
 
 import { ChargerInfoData } from "./ChargerInfoData";
 import { ChargerConnectorInfoData } from "./ChargerConnectorInfoData";
