@@ -109,6 +109,8 @@ After you have created an instance of the apdater you have to configure several 
 
 ## Changelog
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## **WORK IN PROGRESS**
 * (ChrisWbb) smart mode implementation (currently not disabled)
 * (ChrisWbb) update dependancy versions
