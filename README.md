@@ -113,6 +113,10 @@ After you have created an instance of the apdater you have to configure several 
 * (ChrisWbb) smart mode implementation (currently not disabled)
 * (ChrisWbb) update dependancy versions
 
+
+### **WORK IN PROGRESS**
+- (ioBroker-Bot) Adapter requires js-controller >= 6.0.11 now.
+
 ### 1.2.1 (2024-05-30)
 * (ChrisWbb) fix findings of adapter checker
 
