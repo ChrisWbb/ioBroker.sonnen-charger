@@ -109,6 +109,9 @@ After you have created an instance of the apdater you have to configure several 
 
 ## Changelog
 
+### **WORK IN PROGRESS**
+- (iobroker-bot) Adapter requires node.js >= 22 now.
+
 ## **WORK IN PROGRESS**
 * (ChrisWbb) smart mode implementation (currently not disabled)
 * (ChrisWbb) update dependancy versions
